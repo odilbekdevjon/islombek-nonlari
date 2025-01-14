@@ -1,11 +1,9 @@
-
-// images
-import img from "../../assets/right-side.svg";
+import { IoMdNotifications } from "react-icons/io";
 export const Header = () => {
     return(
-        <header className="w-full flex justify-between items-center px-5 mt-5">
-            <time className="text-[#F9FAFC] font-inter text-[15px] font-bold leading-[20px]">9:41</time>
-            <img src={img} width={70} height={15} alt="" />
-        </header>
+        <header className="flex justify-center items-center border-b-2 border-b-[#FFCC15] pb-5 rounded-[30px] mt-3">
+            <h1 className="text-white text-center font-inter text-[25px] font-bold tracking-[1px]">Jo'raboyeva</h1>
+            <IoMdNotifications className="relative left-[80px]" size={25}  color="#FFCC15" />
+        </header> 
     )
 }

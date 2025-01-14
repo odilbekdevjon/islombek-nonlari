@@ -13,6 +13,7 @@ import { Button } from "../../components/ui/button";
 
 // images
 import logo from "../../assets/logo.svg";
+import branch from "../../assets/branch.svg";
 import { FiEye, FiEyeOff, FiChevronDown, FiChevronUp } from "react-icons/fi";
 import { useNavigate } from "react-router-dom";
 
@@ -62,12 +63,12 @@ export const Login = () => {
               )
             }
           </SelectTrigger>
-          <SelectContent>
-            <SelectGroup>
+          <SelectContent className="p-2">
+            <SelectGroup >
               <SelectLabel>Branchs</SelectLabel>
-              <SelectItem value="angor">Angor</SelectItem>
-              <SelectItem value="sherabod">Sherabod</SelectItem>
-              <SelectItem value="jaqorgon">Jarqo'rg'on</SelectItem>
+              <SelectItem className="text-[16px] font-bold font-inter text-[#1C2C57] " value="angor"> <div className="flex items-center gap-5"><img src={branch} width={34} height={34} alt="branch" /> Angor</div></SelectItem>
+              <SelectItem className="text-[16px] font-bold font-inter text-[#1C2C57]" value="sherabod"> <div className="flex items-center gap-5 "><img src={branch} width={34} height={34} alt="branch" /> Sherabod</div></SelectItem>
+              <SelectItem className="text-[16px] font-bold font-inter text-[#1C2C57]" value="jaqorgon"> <div className="flex items-center gap-5"><img src={branch} width={34} height={34} alt="branch" /> Jarqo'rg'on</div> </SelectItem>
             </SelectGroup>
           </SelectContent>
         </Select>
