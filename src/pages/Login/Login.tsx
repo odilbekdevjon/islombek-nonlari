@@ -71,7 +71,7 @@ export const Login = () => {
             </SelectGroup>
           </SelectContent>
         </Select>
-        <Button onClick={() => navigate('/')} className="w-full mt-[100px] bg-[#FFCC15] font-bold text-black text-center text-[25px] hover:bg-[#FFCC15]">Login</Button>
+        <Button onClick={() => navigate('/home')} className="w-full mt-[100px] bg-[#FFCC15] font-bold text-black text-center text-[25px] hover:bg-[#FFCC15]">Login</Button>
       </form>
     </div>
   );
