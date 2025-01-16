@@ -6,7 +6,7 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "../../components/ui/accordion";
-import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+import { Alert, AlertDescription } from "../../components/ui/alert";
 
 export const Storage = () => {
   return (
@@ -22,10 +22,9 @@ export const Storage = () => {
         <Accordion
           type="single"
           collapsible
-          className="w-full bg-[#fff] rounded-md mt-28 mr-5 px-5"
-        >
+          className="w-full bg-[#fff] rounded-md mt-28 mr-5 px-5 hover:no-underline">
           <AccordionItem value="item-1">
-            <AccordionTrigger>Un </AccordionTrigger>
+            <AccordionTrigger className="hover:no-underline">Un </AccordionTrigger>
             <AccordionContent className="flex gap-3">
               <Alert>
                 <AlertDescription>
@@ -40,15 +39,15 @@ export const Storage = () => {
             </AccordionContent>
           </AccordionItem>
           <AccordionItem value="item-2">
-            <AccordionTrigger>Tuxum miqdori</AccordionTrigger>
+            <AccordionTrigger className="hover:no-underline">Tuxum miqdori</AccordionTrigger>
             <AccordionContent>8</AccordionContent>
           </AccordionItem>
           <AccordionItem value="item-3">
-            <AccordionTrigger>Suv miqdori</AccordionTrigger>
+            <AccordionTrigger className="hover:no-underline">Suv miqdori</AccordionTrigger>
             <AccordionContent>20</AccordionContent>
           </AccordionItem>
-          <AccordionItem value="item-3">
-            <AccordionTrigger>Saryog' miqdori</AccordionTrigger>
+          <AccordionItem value="item-4">
+            <AccordionTrigger className="hover:no-underline">Saryog' miqdori</AccordionTrigger>
             <AccordionContent>14</AccordionContent>
           </AccordionItem>
         </Accordion>

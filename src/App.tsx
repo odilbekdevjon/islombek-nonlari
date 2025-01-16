@@ -9,14 +9,13 @@ import { Storage } from "./pages/Storage";
 
 export const App = () => {
   return (
-    <Routes>
-      <Route path="" element={<Navigate to="/login" />} />
-      <Route path="/login" element={<Login />} />
-      <Route path="storage" element={<Storage />} />
-
-      <Route path="/" element={<Layout />}>
-        <Route path="home" element={<Main />} />
-      </Route>
-    </Routes>
+    <Layout>
+      <Routes>
+        <Route path="/" element={<Navigate to={"/login"} />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/home" element={<Main />} />
+        <Route path="/storage" element={<Storage />} />
+      </Routes>
+    </Layout>
   );
 };
