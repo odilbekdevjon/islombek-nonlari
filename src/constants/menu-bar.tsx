@@ -11,7 +11,7 @@ export const MENU_BAR = [
   {
     icon: <TbMessageDots size={25} />,
     label: "Messages",
-    link: "/Messages",
+    link: "/messages",
   },
   {
     icon: <CiUser size={25} />,

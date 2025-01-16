@@ -6,6 +6,10 @@ import { Login } from "./pages/Login";
 import { Main } from "./pages/Main";
 import { Layout } from "./layouts/layout";
 import { Storage } from "./pages/Storage";
+import { Bakery } from "./pages/Bakery";
+import { Notification } from "./pages/Notification";
+import { Messages } from "./pages/Messages";
+import { Profile } from "./pages/Profile";
 
 export const App = () => {
   return (
@@ -15,6 +19,10 @@ export const App = () => {
         <Route path="/login" element={<Login />} />
         <Route path="/home" element={<Main />} />
         <Route path="/storage" element={<Storage />} />
+        <Route path="/bakery" element={<Bakery />} />
+        <Route path="/notification" element={<Notification />} />
+        <Route path="/messages" element={<Messages />} />
+        <Route path="/profile" element={<Profile />} />
       </Routes>
     </Layout>
   );
