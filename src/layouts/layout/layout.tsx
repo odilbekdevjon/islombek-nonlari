@@ -1,13 +1,23 @@
-import { Header } from "../header"
-import { Menu } from "../menu"
-import { Props } from "./types"
+// import { Header } from "../header";
+import { useMemo } from "react";
+import { BottomSheet } from "../bottom-sheet";
+// import { Menu } from "../menu";
+import { Props } from "./types";
+import { matchPath, useLocation } from "react-router-dom";
 
-export const Layout = ({children}: Props) => {
-    return(
-        <div className="flex flex-col h-[100vh]">
-            <Header/>
-                <div className="flex-grow">{children}</div>
-            <Menu/>
-        </div>
-    )
-}
+const PUBLIC_ROUTES = ["/login", "/store"];
+
+export const Layout = ({ children }: Props) => {
+  const { pathname } = useLocation();
+
+  const isAuth = useMemo(() => {
+    return !PUBLIC_ROUTES.some((route) => matchPath({ path: route }, pathname));
+  }, [pathname]);
+
+  return (
+    <div className="flex flex-col h-[100vh]">
+      <div className="flex-grow">{children}</div>
+      {isAuth && <BottomSheet />}
+    </div>
+  );
+};
