@@ -7,12 +7,14 @@ import {
   AccordionTrigger,
 } from "../../components/ui/accordion";
 import { Alert, AlertDescription } from "../../components/ui/alert";
+import { useNavigate } from "react-router-dom";
 
 export const Storage = () => {
+  const navigate = useNavigate();
   return (
     <div>
       <header className="flex justify-between items-center border-b-2 border-b-[#FFCC15] pb-5 px-5 rounded-[30px] mt-3">
-        <BsArrowLeftCircleFill size={25} color="#FFCC15" />
+        <BsArrowLeftCircleFill onClick={() => navigate('/home')} size={25} color="#FFCC15" />
         <h1 className="text-white text-center font-inter text-[25px] font-bold tracking-[1px]">
           Omborxona
         </h1>

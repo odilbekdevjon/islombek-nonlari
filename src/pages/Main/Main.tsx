@@ -1,6 +1,5 @@
 import { Link } from "react-router-dom";
 // icons
-// import { IoMdNotifications } from "react-icons/io";
 import { BiSolidMessageError } from "react-icons/bi";
 import { IoMdNotifications } from "react-icons/io";
 export const Main = () => {
