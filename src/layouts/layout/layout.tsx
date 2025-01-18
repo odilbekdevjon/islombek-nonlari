@@ -6,7 +6,7 @@ import { BottomSheet } from "../bottom-sheet";
 import { Props } from "./types";
 import { matchPath, useLocation } from "react-router-dom";
 
-const PUBLIC_ROUTES = ["/login","/storage", "/bakery", "notification"];
+const PUBLIC_ROUTES = ["/login","/storage", "/bakery", "notification", "message"];
 
 export const Layout = ({ children }: Props) => {
   const { pathname } = useLocation();
