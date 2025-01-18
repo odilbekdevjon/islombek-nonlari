@@ -11,6 +11,7 @@ import { Notification } from "./pages/Notification";
 import { Messages } from "./pages/Messages";
 import { Profile } from "./pages/Profile";
 import { Message } from "./pages/Message";
+import { Information } from "./pages/Information";
 
 export const App = () => {
   return (
@@ -25,6 +26,7 @@ export const App = () => {
         <Route path="/messages" element={<Messages />} />
         <Route path="/profile" element={<Profile />} />
         <Route path="/message" element={<Message />} />
+        <Route path="/information" element={<Information />} />
       </Routes>
     </Layout>
   );

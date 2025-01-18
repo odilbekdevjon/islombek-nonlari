@@ -54,7 +54,7 @@ export const Messages = () => {
             <Button variant="outline" className="bg-[#FFCC15] rounded-[50%] w-[50px] h-[50px] hover:bg-[#FFCC15]"> <IoPersonAddSharp size={35} color="#1C2C57" /> </Button>
           </div>
         </DrawerTrigger>
-        <DrawerContent className="bg-[#1C2C57] flex flex-col justify-between">
+        <DrawerContent className="bg-[#1C2C57] flex flex-col justify-between min-h-[45vh]">
           <div className="px-4 flex-grow overflow-y-auto">
           <Select open={open} onOpenChange={setOpen} >
           <SelectTrigger className="w-full mt-8 mb-36 none">

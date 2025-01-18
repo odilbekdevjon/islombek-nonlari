@@ -12,7 +12,7 @@ export const Main = () => {
         </header> 
         <div className="w-full  mt-5">
       <div className="mt-10 ml-5">
-        <BiSolidMessageError size={25} color="#FFCC15" />
+        <BiSolidMessageError onClick={() => navigate("/messages")}  size={25} color="#FFCC15" />
       </div>
       <div className="flex gap-5 mt-10 justify-center px-5">
         <Link
