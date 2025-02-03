@@ -88,11 +88,11 @@ export const Message = () => {
                 {msg.text}
               </p>
               <span
-                className={`text-xs ${
+                className={`block text-xs ${
                   msg.sender === "You"
                     ? "text-gray-300"
                     : "text-[#1C2C57]"
-                } absolute bottom-1 right-2`}
+                } absolute bottom-1 right-2 `}
               >
                 {msg.time}
               </span>
