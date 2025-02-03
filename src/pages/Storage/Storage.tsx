@@ -15,7 +15,7 @@ export const Storage = () => {
   const navigate = useNavigate();
   return (
     <div>
-      <header className="flex justify-between items-center border-b-2 border-b-[#FFCC15] pb-5 px-5 rounded-[30px] mt-3">
+      <header className="flex justify-between items-center border-b-2 border-b-[#FFCC15] pb-5 px-5 rounded-[30px] mt-4">
         <BsArrowLeftCircleFill onClick={() => navigate('/home')} size={25} color="#FFCC15" />
         <h1 className="text-white text-center font-inter text-[25px] font-bold tracking-[1px]">
           Omborxona
@@ -28,31 +28,37 @@ export const Storage = () => {
           collapsible
           className="w-full bg-[#fff] rounded-md mt-28 mr-5 px-5 hover:no-underline">
           <AccordionItem value="item-1">
-            <AccordionTrigger className="text-[16px] text-[#1C2C57] text-inter font-bold hover:no-underline">Un</AccordionTrigger>
+            <AccordionTrigger className="text-[16px] text-[#1C2C57] text-inter  hover:no-underline">Un</AccordionTrigger>
             <AccordionContent className="flex gap-3">
-              <Alert>
-                <AlertDescription className="flex items-center gap-2 text-[10px] font-bold text-[#1C2C57] font-inter">
+              <Alert className="bg-slate-200 h-8">
+                <AlertDescription className="flex justify-center items-center gap-2 text-[10px] font-bold text-[#1C2C57] font-inter relative bottom-2">
                 <CiShoppingBasket size={20} /> <span>8 Qop</span>
                 </AlertDescription>
               </Alert>
-              <Alert className="bg-[#FFCC15]">
-                <AlertDescription className="flex items-center gap-2 text-[10px] font-bold text-[#1C2C57]">
-                <IoScaleOutline size={20} />  5 Qop olib kelindi
+              <Alert className="bg-[#FFCC15] h-8">
+                <AlertDescription className="flex justify-center items-center gap-2 text-[10px] font-bold text-[#1C2C57] font-inter relative bottom-2">
+                <IoScaleOutline size={20} />  <span>5 Qop olib kelindi</span>
                 </AlertDescription>
               </Alert>
             </AccordionContent>
           </AccordionItem>
           <AccordionItem value="item-2">
-            <AccordionTrigger className="hover:no-underline text-[16px] text-[#1C2C57] text-inter font-bold">Tuxum miqdori</AccordionTrigger>
-            <AccordionContent className="p-2 rounded-lg inline-block bg-[#1C2C57] text-[18px] font-bold text-[#FFCC15]">8</AccordionContent>
+            <AccordionTrigger className="hover:no-underline text-[16px] text-[#1C2C57] text-inter flex justify-between">Tuxum miqdori <span className="px-2 rounded-lg inline-block bg-[#1C2C57] text-[18px] font-bold text-[#FFCC15] relative left-10">8</span></AccordionTrigger>
+            <AccordionContent className="bg-slate-200 mb-4 flex justify-center items-center rounded-lg p-2">
+              <CiShoppingBasket size={20} /> <span>8 dona</span>
+            </AccordionContent>
           </AccordionItem>
           <AccordionItem value="item-3">
-            <AccordionTrigger className="hover:no-underline text-[16px] text-[#1C2C57] text-inter font-bold">Suv miqdori</AccordionTrigger>
-            <AccordionContent className="p-2 rounded-lg inline-block bg-[#1C2C57] text-[18px] font-bold text-[#FFCC15]">20</AccordionContent>
+            <AccordionTrigger className="hover:no-underline text-[16px] text-[#1C2C57] text-inter flex justify-between">Suv miqdori <span className="px-2 rounded-lg inline-block bg-[#1C2C57] text-[18px] font-bold text-[#FFCC15] relative left-12">14</span></AccordionTrigger>
+            <AccordionContent className="bg-slate-200 mb-4 flex justify-center items-center rounded-lg p-2">
+              <CiShoppingBasket size={20} /> <span>14 litr</span>
+            </AccordionContent>
           </AccordionItem>
-          <AccordionItem value="item-4">
-            <AccordionTrigger className="hover:no-underline text-[16px] text-[#1C2C57] text-inter font-bold">Saryog' miqdori</AccordionTrigger>
-            <AccordionContent className="p-2 rounded-lg inline-block bg-[#1C2C57] text-[18px] font-bold text-[#FFCC15]">14</AccordionContent>
+          <AccordionItem value="flex item-4 ">
+            <AccordionTrigger className="hover:no-underline text-[16px] text-[#1C2C57] text-inter  flex justify-between">Saryog' miqdori <span className="px-2 rounded-lg inline-block bg-[#1C2C57] text-[18px] font-bold text-[#FFCC15] relative left-10">20</span></AccordionTrigger>
+            <AccordionContent className="bg-slate-200 mb-4 flex justify-center items-center rounded-lg p-2">
+              <CiShoppingBasket size={20} /> <span>20 kg</span>
+            </AccordionContent>
           </AccordionItem>
         </Accordion>
       </div>

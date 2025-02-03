@@ -13,6 +13,7 @@ import { Label } from "../../components/ui/label";
 import { useState } from "react";
 import { FaPlus } from "react-icons/fa";
 
+
 export const Bakery = () => {
   const navigate = useNavigate();
   const [value, setValue] = useState("");
@@ -54,11 +55,30 @@ export const Bakery = () => {
             </Alert>
           </div>
         </div>
+        <div className="w-full bg-white border-2 border-solid border-[#FFCC15] mt-5 rounded-lg p-4 ">
+          <Alert className="bg-[#F5F6F8]  p-2">
+            <AlertDescription className="font-bold text-[#1C2C57] font-inter text-center">
+              Xamir soni: 2
+            </AlertDescription>
+          </Alert>
+          <div className="flex gap-5 mt-5">
+            <Alert className="bg-[#F5F6F8]  p-2">
+              <AlertDescription className="font-bold text-[#1C2C57] font-inter text-center">
+                Vaqti: 08:25
+              </AlertDescription>
+            </Alert>
+            <Alert className="bg-[#F5F6F8]  p-2">
+              <AlertDescription className="font-bold text-[#1C2C57] font-inter text-center">
+                Timer: 00:20:35
+              </AlertDescription>
+            </Alert>
+          </div>
+        </div>
       </div>
 
       <Dialog>
         <DialogTrigger asChild>
-          <div className="flex justify-end items-end relative min-h-[50vh] p-4">
+          <div className="flex justify-end items-end relative min-h-[30vh] p-4">
             <Button
               variant="outline"
               className="rounded-[30px] p-4 bg-[#FFCC15] "

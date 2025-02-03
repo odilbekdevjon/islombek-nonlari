@@ -23,9 +23,8 @@ import branch from "../../assets/branch.svg";
 export const Main = () => {
   const navigate = useNavigate();
   return (
-    <div>
-      <header className="flex justify-center items-center border-b-2 border-b-[#FFCC15] pb-5 rounded-[30px] mt-3">
-        {/* <h1 className="text-white text-center font-inter text-[25px] font-bold tracking-[1px]">Jo'raboyeva</h1> */}
+    <div className="overflow-y-auto">
+      <header className="flex justify-center items-center border-b-2 border-b-[#FFCC15] pb-3 rounded-[30px] mt-3">
         <Drawer >
           <DrawerTrigger className="text-white text-center font-inter text-[25px] font-bold tracking-[1px] mt-2 flex items-center gap-2">
             Jo'raboyeva <FaAngleDown />
@@ -71,7 +70,7 @@ export const Main = () => {
         />
       </header>
       <div className="w-full  mt-5">
-        <div className="mt-10 ml-5">
+        <div className="mt-5 ml-5">
           <BiSolidMessageError
             onClick={() => navigate("/messages")}
             size={25}
@@ -94,23 +93,23 @@ export const Main = () => {
         </div>
       </div>
 
-      <div className="mt-10 px-4">
+      <div className="mt-8 px-4">
         <h4 className="text-[#FFCC15] font-bold text-[20px] tracking-[5px] mb-3">Retsept</h4>
         <Alert className="flex justify-between items-center py-2 mb-2">
           <AlertTitle className="font-bold text-[16px]">Un</AlertTitle>
           <AlertDescription className="font-bold text-[16px]">1 qop</AlertDescription>
         </Alert>
         <Alert className="flex justify-between items-center py-2 mb-2">
-          <AlertTitle className="font-bold text-[16px] ">Un</AlertTitle>
-          <AlertDescription className="font-bold text-[16px]">1 qop</AlertDescription>
+          <AlertTitle className="font-bold text-[16px] ">Saryog'</AlertTitle>
+          <AlertDescription className="font-bold text-[16px]">1 kg</AlertDescription>
         </Alert>
         <Alert className="flex justify-between items-center py-2 mb-2">
-          <AlertTitle className="font-bold text-[16px]">Un</AlertTitle>
-          <AlertDescription className="font-bold text-[16px]">1 qop</AlertDescription>
+          <AlertTitle className="font-bold text-[16px]">Tuz</AlertTitle>
+          <AlertDescription className="font-bold text-[16px]">1 kg</AlertDescription>
         </Alert>
         <Alert className="flex justify-between items-center py-2">
-          <AlertTitle className="font-bold text-[16px]">Un</AlertTitle>
-          <AlertDescription className="font-bold text-[16px]">1 qop</AlertDescription>
+          <AlertTitle className="font-bold text-[16px]">Droj</AlertTitle>
+          <AlertDescription className="font-bold text-[16px]">5 kg</AlertDescription>
         </Alert>
       </div>
     </div>

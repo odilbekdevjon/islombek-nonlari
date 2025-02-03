@@ -27,10 +27,10 @@ export const Notification = () => {
           Bildirishnoma
         </h1>
       </header>
-      <div className="mt-10 px-5">
+      <div className="mt-10 px-4">
         <Card className="border-2 border-solid border-[#FFCC15] bg-transparent text-white ">
           <CardHeader >
-            <CardTitle className="mb-2">Haydovchi</CardTitle>
+            <CardTitle className="mb-2 font-bold text-[20px] tracking-[1px]">Ta'minotchi</CardTitle>
             <CardDescription className="text-white flex justify-between ">
                 <div className="flex"><FaCalendarAlt className="mr-2" size={20}  /><time>04.12.2024</time></div>
                 <div className="flex"><CiClock2 className="mr-2" size={20} /><time>9:30</time></div>
@@ -38,12 +38,14 @@ export const Notification = () => {
             </CardDescription>
           </CardHeader>
           <CardFooter className="flex justify-between">
-            <Button className="bg-[#DB141C] text-white  font-[500px] hover:bg-[#DB141C]">Bekor qilish</Button> <Button className="bg-[#099431] hover:bg-[#099431] text-white font-[500px]">Qabul qilish</Button>
+            <Button className="bg-[#DB141C] text-white  font-[500px] hover:bg-[#DB141C]">Bekor qilish</Button> 
+            <Button className="bg-[#099431] hover:bg-[#099431] text-white font-[500px]">Qabul qilish</Button>
           </CardFooter>
         </Card>
+        
         <Card className="mt-5 border-2 border-solid border-[#FFCC15] bg-transparent text-white">
           <CardHeader>
-            <CardTitle>Shuhrat Azizov</CardTitle>
+            <CardTitle className=" font-bold text-[20px] tracking-[1px]">Shuhrat Azizov</CardTitle>
           </CardHeader>
           <CardContent>
             <CardDescription className="text-white flex justify-between ">
