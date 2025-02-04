@@ -11,6 +11,28 @@ import {
   TableCell,
   TableRow,
 } from "../../components/ui/table";
+import { Button } from "../../components/ui/button";
+import {
+  Dialog,
+  DialogContent,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "../../components/ui/dialog";
+import {
+  AlertDialog,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "../../components/ui/alert-dialog";
+
+import { Input } from "../../components/ui/input";
+import { Label } from "../../components/ui/label";
 
 // images
 import { FiEdit3 } from "react-icons/fi";
@@ -43,33 +65,51 @@ export const Profile = () => {
           </AccordionTrigger>
           <AccordionContent className="">
             <div className="flex gap-3 my-2">
-            <span className="text-[#FFCC15] text-[14px] font-bold px-4">
-              Xamir soni
-            </span>
-            <span className="text-[#FFCC15] text-[14px] font-bold px-4">
-              Doimiy narx
-            </span>
-            <span className="text-[#FFCC15] text-[14px] font-bold px-4">
-              Umumiy
-            </span>
+              <span className="text-[#FFCC15] text-[14px] font-bold px-4">
+                Xamir soni
+              </span>
+              <span className="text-[#FFCC15] text-[14px] font-bold px-4">
+                Doimiy narx
+              </span>
+              <span className="text-[#FFCC15] text-[14px] font-bold px-4">
+                Umumiy
+              </span>
             </div>
 
             <Table className="bg-white">
               <TableBody className="border border-yellow-400 rounded-lg">
                 <TableRow className="hover:bg-transparent border-b border-b-yellow-400 ">
-                  <TableCell className="font-bold text-[15px] text-[#1C2C57]">7 xamir</TableCell>
-                  <TableCell className="font-bold text-[15px] text-[#1C2C57]">60 ming</TableCell>
-                  <TableCell className="font-bold text-[15px] text-[#1C2C57]">420 ming</TableCell>
+                  <TableCell className="font-bold text-[15px] text-[#1C2C57]">
+                    7 xamir
+                  </TableCell>
+                  <TableCell className="font-bold text-[15px] text-[#1C2C57]">
+                    60 ming
+                  </TableCell>
+                  <TableCell className="font-bold text-[15px] text-[#1C2C57]">
+                    420 ming
+                  </TableCell>
                 </TableRow>
                 <TableRow className="hover:bg-transparent border-b border-b-yellow-400">
-                  <TableCell className="font-bold text-[15px] text-[#1C2C57]">3 xamir</TableCell>
-                  <TableCell className="font-bold text-[15px] text-[#1C2C57]">60 ming</TableCell>
-                  <TableCell className="font-bold text-[15px] text-[#1C2C57]">180 ming</TableCell>
+                  <TableCell className="font-bold text-[15px] text-[#1C2C57]">
+                    3 xamir
+                  </TableCell>
+                  <TableCell className="font-bold text-[15px] text-[#1C2C57]">
+                    60 ming
+                  </TableCell>
+                  <TableCell className="font-bold text-[15px] text-[#1C2C57]">
+                    180 ming
+                  </TableCell>
                 </TableRow>
                 <TableRow className="hover:bg-transparent border-b border-b-yellow-400">
-                  <TableCell className="font-bold text-[15px] text-[#1C2C57]">6 xamir</TableCell>
-                  <TableCell className="font-bold text-[15px] text-[#1C2C57]">60 ming</TableCell>
-                  <TableCell className="font-bold text-[15px] text-[#1C2C57]">360 ming</TableCell>
+                  <TableCell className="font-bold text-[15px] text-[#1C2C57]">
+                    6 xamir
+                  </TableCell>
+                  <TableCell className="font-bold text-[15px] text-[#1C2C57]">
+                    60 ming
+                  </TableCell>
+                  <TableCell className="font-bold text-[15px] text-[#1C2C57]">
+                    360 ming
+                  </TableCell>
                 </TableRow>
                 <TableRow className="hover:bg-transparent border-b border-b-yellow-400">
                   <TableCell className=""></TableCell>
@@ -88,18 +128,114 @@ export const Profile = () => {
       </Accordion>
 
       <div className="px-4 mt-5">
-        <button className="w-full bg-white p-3 rounded-lg flex items-center gap-5 border-2 border-solid border-yellow-400 mb-4">
-            <FaRegEdit size={20} color="#1C2C57" />
-            <span className="text-[#1C2C57] font-bold text-[15px]">Usernameni o'zgartirish</span>
-        </button>
-        <button className="w-full bg-white p-3 rounded-lg flex items-center gap-5 border-2 border-solid border-yellow-400 mb-4">
-            <IoMdLock size={20} color="#1C2C57" />
-            <span className="text-[#1C2C57] font-bold text-[15px]">Profile parolini o'zgartirish</span>
-        </button>
-        <button className="w-full bg-white p-3 rounded-lg flex items-center gap-5 border-2 border-solid border-yellow-400">
-            <TbShare2 size={20} color="#1C2C57" />
-            <span className="text-[#1C2C57] font-bold text-[15px]">Akkountdan Chiqish</span>
-        </button>
+        <Dialog>
+          <DialogTrigger asChild>
+            <button className="w-full bg-white p-3 rounded-lg flex items-center gap-5 border-2 border-solid border-yellow-400 mb-4">
+              <FaRegEdit size={20} color="#1C2C57" />
+              <span className="text-[#1C2C57] font-bold text-[15px]">
+                Usernameni o'zgartirish
+              </span>
+            </button>
+          </DialogTrigger>
+          <DialogContent className="sm:max-w-[425px]">
+            <DialogHeader>
+              <DialogTitle className="text-[#1C2C57] font-bold text-[20px]">
+                Username o'zgartirish
+              </DialogTitle>
+            </DialogHeader>
+            <div className="grid gap-4 py-4">
+              <div className="flex flex-col items-start gap-2">
+                <Label
+                  htmlFor="username"
+                  className="text-right text-[#1C2C57] font-bold text-[15px]"
+                >
+                  Username
+                </Label>
+                <Input id="username" className="col-span-3 border-yellow-400" />
+              </div>
+            </div>
+            <DialogFooter>
+              <Button type="submit" className="bg-[#1C2C57]">
+                Save changes
+              </Button>
+            </DialogFooter>
+          </DialogContent>
+        </Dialog>
+
+        <Dialog>
+          <DialogTrigger asChild>
+            <button className="w-full bg-white p-3 rounded-lg flex items-center gap-5 border-2 border-solid border-yellow-400 mb-4">
+              <IoMdLock size={20} color="#1C2C57" />
+              <span className="text-[#1C2C57] font-bold text-[15px]">
+                Profile parolini o'zgartirish
+              </span>
+            </button>
+          </DialogTrigger>
+          <DialogContent className="sm:max-w-[425px] ">
+            <DialogHeader>
+              <DialogTitle className="text-[#1C2C57] font-bold text-[20px]">
+                Profile parolini o'zgartirish
+              </DialogTitle>
+            </DialogHeader>
+            <div className="grid gap-4 py-4">
+              <div className="flex flex-col items-start gap-2">
+                <Label
+                  htmlFor="username"
+                  className="text-right text-[#1C2C57] font-bold text-[15px]"
+                >
+                  Parol
+                </Label>
+                <Input id="username" className="col-span-3 border-yellow-400" />
+              </div>
+              <div className="flex flex-col items-start gap-2">
+                <Label
+                  htmlFor="username"
+                  className="text-right text-[#1C2C57] font-bold text-[15px]"
+                >
+                  Eski parol
+                </Label>
+                <Input id="username" className="col-span-3 border-yellow-400" />
+              </div>
+              <div className="flex flex-col items-start gap-2">
+                <Label
+                  htmlFor="username"
+                  className="text-right text-[#1C2C57] font-bold text-[15px]"
+                >
+                  Yangi parol
+                </Label>
+                <Input id="username" className="col-span-3 border-yellow-400" />
+              </div>
+            </div>
+            <DialogFooter>
+              <Button type="submit" className="bg-[#1C2C57]">
+                Save changes
+              </Button>
+            </DialogFooter>
+          </DialogContent>
+        </Dialog>
+
+        <AlertDialog>
+          <AlertDialogTrigger asChild>
+            <button className="w-full bg-white p-3 rounded-lg flex items-center gap-5 border-2 border-solid border-yellow-400">
+              <TbShare2 size={20} color="#1C2C57" />
+              <span className="text-[#1C2C57] font-bold text-[15px]">
+                Akkountdan Chiqish
+              </span>
+            </button>
+          </AlertDialogTrigger>
+          <AlertDialogContent>
+            <AlertDialogHeader>
+              <AlertDialogTitle>Akkountdan chiqasizmi?</AlertDialogTitle>
+              <AlertDialogDescription>
+                
+              </AlertDialogDescription>
+            </AlertDialogHeader>
+            <AlertDialogFooter className="flex ">
+              <AlertDialogCancel className="">Bekor qilish</AlertDialogCancel>
+              <button className="border-2 p-2 rounded-lg bg-red-700 text-white">Chiqish</button>
+            </AlertDialogFooter>
+          </AlertDialogContent>
+        </AlertDialog>
       </div>
     </>
   );
