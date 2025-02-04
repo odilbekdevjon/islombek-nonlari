@@ -30,6 +30,13 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "../../components/ui/alert-dialog";
+import {
+  Drawer,
+  DrawerContent,
+  DrawerDescription,
+  DrawerHeader,
+  DrawerTrigger,
+} from "../../components/ui/drawer";
 
 import { Input } from "../../components/ui/input";
 import { Label } from "../../components/ui/label";
@@ -45,13 +52,44 @@ export const Profile = () => {
   return (
     <>
       <header className="gap-5 border-b-2 border-b-[#FFCC15] pb-8 px-5 rounded-[30px] mt-5">
-        <div className="flex items-center gap-5">
+        <div className="flex items-center gap-4">
           <Avatar className="w-[116px] h-[116px]">
             <AvatarImage width={116} height={116} src={avatar} />
           </Avatar>
-          <h1 className="flex items-center gap-2 text-white text-center font-inter text-[20px] font-bold tracking-[1px]">
-            Brooklyn Simmons <FiEdit3 />
+          <h1 className=" text-white text-center font-inter text-[20px] font-bold tracking-[1px]">
+            Brooklyn Simmons
           </h1>
+          <Dialog>
+            <DialogTrigger asChild>
+              <FiEdit3 className="mr-5" size={25} color="white" />
+            </DialogTrigger>
+            <DialogContent className="sm:max-w-[425px]">
+              <DialogHeader>
+                <DialogTitle className="text-[#1C2C57] font-bold text-[20px]">
+                  Username o'zgartirish
+                </DialogTitle>
+              </DialogHeader>
+              <div className="grid gap-4 py-4">
+                <div className="flex flex-col items-start gap-2">
+                  <Label
+                    htmlFor="username"
+                    className="text-right text-[#1C2C57] font-bold text-[15px]"
+                  >
+                    Username
+                  </Label>
+                  <Input
+                    id="username"
+                    className="col-span-3 border-yellow-400"
+                  />
+                </div>
+              </div>
+              <DialogFooter>
+                <Button type="submit" className="bg-[#1C2C57]">
+                  Save changes
+                </Button>
+              </DialogFooter>
+            </DialogContent>
+          </Dialog>
         </div>
         <div className="w-14 h-14 p-[12px] rounded-[25px] absolute top-20 left-24 bg-[#677294CC]">
           <FaCamera className="" size={30} color="white" />
@@ -128,91 +166,78 @@ export const Profile = () => {
       </Accordion>
 
       <div className="px-4 mt-5">
-        <Dialog>
-          <DialogTrigger asChild>
-            <button className="w-full bg-white p-3 rounded-lg flex items-center gap-5 border-2 border-solid border-yellow-400 mb-4">
+        <Drawer >
+          <DrawerTrigger className="w-full text-white text-center font-inter text-[25px] font-bold tracking-[1px] mt-2 flex items-center gap-2">
+            <button className="w-full  bg-white p-3 rounded-lg flex items-center gap-5 border-2 border-solid border-yellow-400 mb-4">
               <FaRegEdit size={20} color="#1C2C57" />
               <span className="text-[#1C2C57] font-bold text-[15px]">
                 Usernameni o'zgartirish
               </span>
             </button>
-          </DialogTrigger>
-          <DialogContent className="sm:max-w-[425px]">
-            <DialogHeader>
-              <DialogTitle className="text-[#1C2C57] font-bold text-[20px]">
-                Username o'zgartirish
-              </DialogTitle>
-            </DialogHeader>
-            <div className="grid gap-4 py-4">
-              <div className="flex flex-col items-start gap-2">
-                <Label
-                  htmlFor="username"
-                  className="text-right text-[#1C2C57] font-bold text-[15px]"
-                >
-                  Username
-                </Label>
-                <Input id="username" className="col-span-3 border-yellow-400" />
-              </div>
-            </div>
-            <DialogFooter>
-              <Button type="submit" className="bg-[#1C2C57]">
-                Save changes
-              </Button>
-            </DialogFooter>
-          </DialogContent>
-        </Dialog>
+          </DrawerTrigger>
+          <DrawerContent className="bg-[#1C2C57] rounded-[20px] border-none h-60">
+            <DrawerHeader className="">
+              <DrawerDescription className="">
+                <span className="text-white text-start block font-bold text-[15px] mb-2">
+                  Usernameni o'zgartirish
+                </span>
+                <Input id="username" className="col-span-3 border-yellow-400 text-black" />
+                <Button className="w-full text-[#1C2C57] bg-[#FFCC15] mt-10 font-bold text-[15px] hover:bg-[#FFCC15]">O'zgartirish</Button>
+              </DrawerDescription>
+            </DrawerHeader>
+          </DrawerContent>
+        </Drawer>
 
-        <Dialog>
-          <DialogTrigger asChild>
-            <button className="w-full bg-white p-3 rounded-lg flex items-center gap-5 border-2 border-solid border-yellow-400 mb-4">
+            
+
+            <Drawer >
+          <DrawerTrigger className="w-full text-white text-center font-inter text-[25px] font-bold tracking-[1px] flex items-center gap-2">
+          <button className="w-full bg-white p-3 rounded-lg flex items-center gap-5 border-2 border-solid border-yellow-400 mb-4">
               <IoMdLock size={20} color="#1C2C57" />
               <span className="text-[#1C2C57] font-bold text-[15px]">
                 Profile parolini o'zgartirish
               </span>
             </button>
-          </DialogTrigger>
-          <DialogContent className="sm:max-w-[425px] ">
-            <DialogHeader>
-              <DialogTitle className="text-[#1C2C57] font-bold text-[20px]">
-                Profile parolini o'zgartirish
-              </DialogTitle>
-            </DialogHeader>
-            <div className="grid gap-4 py-4">
-              <div className="flex flex-col items-start gap-2">
+          </DrawerTrigger>
+          <DrawerContent className="bg-[#1C2C57] rounded-[20px] border-none ">
+              <DrawerDescription className="">
+              <div className="grid gap-4 py-4">
+              <div className="flex flex-col items-start gap-2 px-4">
                 <Label
                   htmlFor="username"
-                  className="text-right text-[#1C2C57] font-bold text-[15px]"
+                  className="text-right text-white font-bold text-[15px]"
                 >
                   Parol
                 </Label>
                 <Input id="username" className="col-span-3 border-yellow-400" />
               </div>
-              <div className="flex flex-col items-start gap-2">
+              <div className="flex flex-col items-start gap-2 px-4">
                 <Label
                   htmlFor="username"
-                  className="text-right text-[#1C2C57] font-bold text-[15px]"
+                  className="text-right text-white font-bold text-[15px]"
                 >
                   Eski parol
                 </Label>
                 <Input id="username" className="col-span-3 border-yellow-400" />
               </div>
-              <div className="flex flex-col items-start gap-2">
+              <div className="flex flex-col items-start gap-2 px-4">
                 <Label
                   htmlFor="username"
-                  className="text-right text-[#1C2C57] font-bold text-[15px]"
+                  className="text-right text-white font-bold text-[15px]"
                 >
                   Yangi parol
                 </Label>
                 <Input id="username" className="col-span-3 border-yellow-400" />
               </div>
-            </div>
-            <DialogFooter>
-              <Button type="submit" className="bg-[#1C2C57]">
-                Save changes
+              <div className="px-4 mt-5">
+              <Button type="submit" className="w-full hover:bg-[#FFCC15] bg-[#FFCC15] text-[#1C2C57] ">
+                  Save changes
               </Button>
-            </DialogFooter>
-          </DialogContent>
-        </Dialog>
+              </div>
+            </div>
+              </DrawerDescription>
+          </DrawerContent>
+        </Drawer>
 
         <AlertDialog>
           <AlertDialogTrigger asChild>
@@ -226,13 +251,13 @@ export const Profile = () => {
           <AlertDialogContent>
             <AlertDialogHeader>
               <AlertDialogTitle>Akkountdan chiqasizmi?</AlertDialogTitle>
-              <AlertDialogDescription>
-                
-              </AlertDialogDescription>
+              <AlertDialogDescription></AlertDialogDescription>
             </AlertDialogHeader>
             <AlertDialogFooter className="flex ">
-              <AlertDialogCancel className="">Bekor qilish</AlertDialogCancel>
-              <button className="border-2 p-2 rounded-lg bg-red-700 text-white">Chiqish</button>
+              <AlertDialogCancel className="bg-[#FFCC15] hover:bg-[#FFCC15] text-[#1C2C57]">Bekor qilish</AlertDialogCancel>
+              <button className="border-2 p-2 rounded-lg bg-red-700 text-[#1C2C57]">
+                Chiqish
+              </button>
             </AlertDialogFooter>
           </AlertDialogContent>
         </AlertDialog>
