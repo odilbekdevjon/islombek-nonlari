@@ -79,13 +79,13 @@ export const Main = () => {
         </div>
         <div className="flex gap-5 mt-10 justify-center px-5">
           <Link
-            className="w-[163px] h-[131px] bg-white rounded-[16px] border-4 border-solid border-[#FFCC15] text-[#1C2C57] text-center font-bold text-[20px] py-11"
+            className="w-full bg-white rounded-[16px] border-4 border-solid border-[#FFCC15] text-[#1C2C57] text-center font-bold text-[20px] py-11"
             to={"/storage"}
           >
             Omborxona
           </Link>
           <Link
-            className="w-[163px] h-[131px] bg-white rounded-[16px] border-4 border-solid border-[#FFCC15] text-[#1C2C57] text-center font-bold text-[20px] py-11"
+            className="w-full bg-white rounded-[16px] border-4 border-solid border-[#FFCC15] text-[#1C2C57] text-center font-bold text-[20px] py-11"
             to={"/bakery"}
           >
             Xamir

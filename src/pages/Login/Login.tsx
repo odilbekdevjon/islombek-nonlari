@@ -12,18 +12,17 @@ export const Login = () => {
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [login, { isLoading, error,  }] = useLoginMutation();
+  const [login, { isLoading  }] = useLoginMutation();
   const navigate = useNavigate();
 
   const loginSubmit = async () => {
     try {
       const response = await login({ username, password }).unwrap(); 
       if(response) {
-        const { user, token } = response;
-        localStorage.setItem("user", JSON.stringify(user));
+        const { token } = response;
         localStorage.setItem("token", token);
         navigate("/home");
-      } 
+      }
   } catch (err) {
     console.error(err);
     alert("Xatolik yuz berdi!");
@@ -74,6 +73,11 @@ export const Login = () => {
           type="submit"
           disabled={isLoading}
           onClick={loginSubmit}
+          onKeyDown={(e) => {
+            if (e.key === "Enter") {
+              loginSubmit();
+            }
+          }}
           className="w-full mt-[120px] bg-[#FFCC15] font-bold text-black text-center text-[25px] hover:bg-[#FFCC15]"
         >
           {isLoading ? "Loading..." : "Login"}
