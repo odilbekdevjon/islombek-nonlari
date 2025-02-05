@@ -8,6 +8,7 @@ import { FiEye, FiEyeOff } from "react-icons/fi";
 import { useLoginMutation } from "../../app/api";
 import { useStorage } from "../../utils";
 import { useNavigate } from "react-router-dom";
+import { Toaster, toast } from "react-hot-toast";
 
 export const Login = () => {
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
@@ -24,21 +25,31 @@ export const Login = () => {
   }, [token, navigate]);
 
   const loginSubmit = async () => {
+    if (!username || !password) {
+      toast.error("Iltimos, barcha maydonlarni to‘ldiring!");
+      return;
+    }
     try {
       const response = await login({ username, password }).unwrap();
       useStorage.setCredentials({ token: response?.token });
+
+      if (response.token) {
+        toast.success("Muvaffaqiyatli tizimga kirdingiz!");
+        setTimeout(() => navigate("/home"), 1500);
+      }
 
       if (response.token) {
         navigate("/home");
       }
     } catch (err) {
       console.error(err);
-      alert("Xatolik yuz berdi!");
+      toast.error("Xatolik yuz berdi! Login yoki parol xato.");
     }
   };
 
   return (
     <div className="w-full px-5">
+      <Toaster position="top-center" reverseOrder={false} />
       <h1 className="text-center text-[30px] text-[#fff] font-bold tracking-[0.9px] font-inter mt-5">
         Xamirxona
       </h1>
@@ -55,6 +66,7 @@ export const Login = () => {
       <div>
         <Input
           className="mt-5 focus:outline-none"
+          required
           type="text"
           placeholder="username"
           value={username}
@@ -63,6 +75,7 @@ export const Login = () => {
         <div className="relative mt-5">
           <Input
             className="pr-10 outline-none"
+            required
             type={isPasswordVisible ? "text" : "password"}
             placeholder="password"
             value={password}
