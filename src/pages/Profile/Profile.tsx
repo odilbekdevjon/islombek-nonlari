@@ -49,8 +49,16 @@ import { FaRegEdit } from "react-icons/fa";
 import { IoMdLock } from "react-icons/io";
 import { TbShare2 } from "react-icons/tb";
 import { useNavigate } from "react-router-dom";
+
+
 export const Profile = () => {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
+
+  const handleRemove = () => {
+    localStorage.removeItem("ACCESS_TOKEN")
+    navigate('/login')
+  }
+
   return (
     <>
       <header className="gap-5 border-b-2 border-b-[#FFCC15] pb-8 px-5 rounded-[30px] mt-5">
@@ -256,7 +264,7 @@ export const Profile = () => {
             </AlertDialogHeader>
             <AlertDialogFooter className="flex ">
               <AlertDialogCancel className="bg-[#FFCC15] hover:bg-[#FFCC15] text-[#1C2C57]">Bekor qilish</AlertDialogCancel>
-              <button onClick={() => navigate('/login')} className="border-2 p-2 rounded-lg bg-red-700 text-[#1C2C57]">
+              <button onClick={handleRemove} className="border-2 p-2 rounded-lg bg-red-700 text-[#1C2C57]">
                 Chiqish
               </button>
             </AlertDialogFooter>

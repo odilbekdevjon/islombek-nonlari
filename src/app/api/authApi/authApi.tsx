@@ -1,16 +1,14 @@
-import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { PATHS } from "./paths";
 import { LoginRequest, LoginResponse } from "./types";
+import { baseApi } from "../baseApi";
 
-export const authApi = createApi({
-    reducerPath:'authapi',
-    baseQuery:fetchBaseQuery({baseUrl:'https://bakery.the-watcher.uz/'}),
-    endpoints:(builder) => ({
+export const authApi = baseApi.injectEndpoints({
+    endpoints: (builder) => ({
         login: builder.mutation<LoginResponse, LoginRequest>({
-            query: (credentials) => ({
+            query: (body) => ({
                 url: PATHS.LOGIN,
                 method: 'POST',
-                body: credentials,
+                body,
                 headers: {
                     'Content-Type': 'application/json'
                 }

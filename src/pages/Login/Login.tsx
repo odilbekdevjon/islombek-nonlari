@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Input } from "../../components/ui/input";
 import { Button } from "../../components/ui/button";
 
@@ -6,6 +6,7 @@ import { Button } from "../../components/ui/button";
 import logo from "../../assets/logo.svg";
 import { FiEye, FiEyeOff } from "react-icons/fi";
 import { useLoginMutation } from "../../app/api";
+import { useStorage } from "../../utils";
 import { useNavigate } from "react-router-dom";
 
 export const Login = () => {
@@ -14,20 +15,27 @@ export const Login = () => {
   const [password, setPassword] = useState("");
   const [login, { isLoading  }] = useLoginMutation();
   const navigate = useNavigate();
+  const token = localStorage.getItem("ACCESS_TOKEN");
+
+  useEffect(() => {
+    if (token) {
+      navigate("/home", { replace: true });
+    }
+  }, [token, navigate]);
 
   const loginSubmit = async () => {
     try {
-      const response = await login({ username, password }).unwrap(); 
-      if(response) {
-        const { token } = response;
-        localStorage.setItem("token", token);
+      const response = await login({ username, password }).unwrap();
+      useStorage.setCredentials({ token: response?.token });
+
+      if (response.token) {
         navigate("/home");
       }
-  } catch (err) {
-    console.error(err);
-    alert("Xatolik yuz berdi!");
-  }
-}
+    } catch (err) {
+      console.error(err);
+      alert("Xatolik yuz berdi!");
+    }
+  };
 
   return (
     <div className="w-full px-5">
@@ -83,8 +91,6 @@ export const Login = () => {
           {isLoading ? "Loading..." : "Login"}
         </Button>
       </div>
-
-        
     </div>
   );
 }
