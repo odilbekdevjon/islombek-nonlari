@@ -7,10 +7,14 @@ import {Select,SelectContent,SelectGroup,SelectItem,SelectTrigger,SelectValue,} 
 // image
 import person from "../../assets/person.svg";
 import { IoPersonAddSharp } from "react-icons/io5";
+import { useGetAllMessagesQuery } from "../../app/api/messagesApi";
 
 export const Messages = () => {
+  
+  const {data} = useGetAllMessagesQuery([]);
+  
   const navigate = useNavigate();
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState(false) ;
   return (
     <>
       <header className="border-b-2 border-b-[#FFCC15] pb-5 px-5 rounded-[30px] mt-4">
@@ -19,33 +23,21 @@ export const Messages = () => {
         </h1>
       </header>
       <div className="px-4 mt-10">
-        <Alert onClick={() => navigate('/message')} className="flex gap-2 mb-5 p-2">
-          <img src={person} width={50} alt="person" />
-          <AlertDescription  >
-            <span className="font-bold text-[14px] text-[#1C2C57]">
-              Shuhrat
-            </span>
-            <p className=" text-[12px] text-[#1C2C57]">Message</p>
-          </AlertDescription>
-        </Alert>
-        <Alert onClick={() => navigate('/message')} className="flex gap-2 mb-5 p-2">
-          <img src={person} width={50} alt="person" />
-          <AlertDescription >
-            <span className="font-bold text-[14px] text-[#1C2C57]">
-              Shuhrat
-            </span>
-            <p className=" text-[12px] text-[#1C2C57]">Message</p>
-          </AlertDescription>
-        </Alert>
-        <Alert onClick={() => navigate('/message')} className="flex gap-2 p-2">
-          <img src={person} width={50} alt="person" />
-          <AlertDescription >
-            <span className="font-bold text-[14px] text-[#1C2C57]">
-              Shuhrat
-            </span>
-            <p className=" text-[12px] text-[#1C2C57]">Message</p>
-          </AlertDescription>
-        </Alert>
+        {
+          data?.map((item) => {
+            return(
+              <Alert key={item.chat?._id || '1'} onClick={() => navigate(`/message/${item.chat?._id}`)} className="flex gap-2 mb-5 p-2">
+                <img src={person} width={50} alt="person" />
+                <AlertDescription  >
+                  <span className="font-bold text-[14px] text-[#1C2C57]">
+                    {item.chat?.fullName || 'Not found'}
+                  </span>
+                  <p className=" text-[12px] text-[#1C2C57]">{item.lastMessage}</p>
+                </AlertDescription>
+              </Alert>
+            )
+          })
+        }
       </div>
 
       <Drawer >

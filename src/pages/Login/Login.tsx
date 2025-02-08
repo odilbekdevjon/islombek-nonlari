@@ -42,7 +42,6 @@ export const Login = () => {
         navigate("/home");
       }
     } catch (err) {
-      console.error(err);
       toast.error("Xatolik yuz berdi! Login yoki parol xato.");
     }
   };

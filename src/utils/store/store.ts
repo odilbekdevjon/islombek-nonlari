@@ -4,7 +4,7 @@ import { SetCredentialsParams } from "./types";
 class Storage {
   public setCredentials({ token }: SetCredentialsParams) {
     if (token) {
-      localStorage.setItem(AuthStorageKeys.ACCESS_TOKEN, `Bearer ${token}`);
+      localStorage.setItem(AuthStorageKeys.ACCESS_TOKEN, token);
     }
   }
 

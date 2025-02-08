@@ -4,15 +4,20 @@ import {
   AvatarImage,
 } from "../../components/ui/avatar";
 import { AlertTitle } from "../../components/ui/alert";
+import dayjs from "dayjs";
 
 // images
 import { FaArrowLeftLong } from "react-icons/fa6";
-import person from "../../assets/person.svg";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { IoSend } from "react-icons/io5";
 import { useState } from "react";
+import { useGetSingleUserQuery } from "../../app/api/userApi";
+
 
 export const Message = () => {
+  const { id } = useParams();
+  const {data } = useGetSingleUserQuery({id: id as string});
+  
   const navigate = useNavigate();
   const [message, setMessage] = useState("");
   const [messages, setMessages] = useState([
@@ -54,11 +59,11 @@ export const Message = () => {
           size={20}
         />
         <Avatar>
-          <AvatarImage src={person} alt="@shadcn" />
+          <AvatarImage src={data?.avatar} alt="@shadcn" />
           <AvatarFallback>CN</AvatarFallback>
         </Avatar>
         <h1 className="text-white text-center font-inter text-[25px] font-bold tracking-[1px]">
-          Shuhrat
+          {data?.fullName}
         </h1>
       </header>
 
@@ -77,7 +82,7 @@ export const Message = () => {
             >
               {msg.sender !== "You" && (
                 <AlertTitle className="text-lg font-bold mb-2">
-                  {msg.sender}
+                  {data?.fullName}
                 </AlertTitle>
               )}
               <p
@@ -94,7 +99,7 @@ export const Message = () => {
                     : "text-[#1C2C57]"
                 } absolute bottom-1 right-2 `}
               >
-                {msg.time}
+                {dayjs(data?.createdAt).format("YYYY-MM-DD")}
               </span>
               {msg.sender !== "You" ? (
                 <div className="absolute left-[-9px] top-[50%] transform -translate-y-1/2 w-0 h-0 border-y-[10px] border-y-transparent border-r-[10px] border-r-white"></div>

@@ -17,4 +17,4 @@ export const baseApi = createApi({
     }),
     endpoints: () => ({}),
   });
-  export default baseApi;
+export default baseApi;

@@ -13,7 +13,7 @@ import { Profile } from "./pages/Profile";
 import { Message } from "./pages/Message";
 import { Information } from "./pages/Information";
 import { ProtectedRoute } from "./components/ProtectedRoute"; 
-import { NotFound } from "./pages/NotFound/NotFound";
+// import { NotFound } from "./pages/NotFound/NotFound";
 
 export const App = () => {
   return (
@@ -28,10 +28,10 @@ export const App = () => {
         <Route path="/notification" element={<ProtectedRoute element={<Notification />} />} />
         <Route path="/messages" element={<ProtectedRoute element={<Messages />} />} />
         <Route path="/profile" element={<ProtectedRoute element={<Profile />} />} />
-        <Route path="/message" element={<ProtectedRoute element={<Message />} />} />
+        <Route path="/message/:id" element={<ProtectedRoute element={<Message />} />} />
         <Route path="/information" element={<ProtectedRoute element={<Information />} />} />
 
-        <Route path="*" element={<NotFound />} />
+        {/* <Route path="*" element={<NotFound />} /> */}
       </Routes>
     </Layout>
   );
