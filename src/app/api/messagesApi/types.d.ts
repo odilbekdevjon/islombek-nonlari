@@ -14,7 +14,7 @@ export type GetAllMessagesResponse = {
 }[]
 
 
-export type GetMessageRequest = {
+export type GetMessageResponse = {
     _id: string;
     from: string;
     to: string;
@@ -22,4 +22,11 @@ export type GetMessageRequest = {
     content: string;
 }[]
 
-export interface GetMessageResponse {[]}
+export type GetMessageRequest = string | undefined;
+
+export type PostMessageRequest = {
+    to: string;
+    content: string;
+}
+
+export type PostMessageResponse = {[]}

@@ -44,30 +44,96 @@ import { Label } from "../../components/ui/label";
 // images
 import { FiEdit3 } from "react-icons/fi";
 import { FaCamera } from "react-icons/fa";
-import avatar from "../../assets/avatar.svg";
 import { FaRegEdit } from "react-icons/fa";
 import { IoMdLock } from "react-icons/io";
 import { TbShare2 } from "react-icons/tb";
 import { useNavigate } from "react-router-dom";
+import {
+  useGetSingleUserQuery,
+  useUpdateUserMutation,
+  useUpdateUserPasswordMutation,
+} from "../../app/api";
+import { useState } from "react";
+import { Toaster, toast } from "react-hot-toast";
 
 
 export const Profile = () => {
   const navigate = useNavigate();
+  const { data: user } = useGetSingleUserQuery({});
+  const [updateUserPassword] = useUpdateUserPasswordMutation();
+  const [password, setPassword] = useState("");
+  const [newPassword, setNewPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [ changeUserName , setChangeUsername] = useState("");
+  const [ changeFullName , setChangeFullName] = useState("");
+  const [ updateUser ] = useUpdateUserMutation({});
 
-  const handleRemove = () => {
-    localStorage.removeItem("ACCESS_TOKEN")
-    navigate('/login')
+  // change name
+  const handleNameChange = async () => {
+    const response = await updateUser({
+      id:user?._id as string,
+      fullName: changeFullName || user?.fullName,
+    })    
+    if (response.error) {
+      toast.error("Full name change failed. Please try again.");
+      return;
+    } else {
+      toast.success("Full name changed successfully!");
+    }
+    window.location.reload();
   }
+
+  // change username
+  const handleUserNameChange = async () => {
+    const response = await updateUser({
+      id: user?._id as string,
+      username: changeUserName || user?.username,
+    });
+    if (response.error) {
+      toast.error("User name change failed. Please try again.");
+      return;
+    } else {
+      toast.success("User name changed successfully!");
+    }
+    handleRemove();
+  }
+
+  // change password
+  const handlePasswordChange = async () => {
+    const response = await updateUserPassword({
+      oldPassword:password, 
+      newPassword:newPassword, 
+      confirmPassword:confirmPassword
+    });
+    if (response.error) {
+      toast.error("Password change failed. Check your old password and try again.");
+      return;
+    }else {
+      toast.success("Password changed successfully!");
+      setPassword("");
+      setNewPassword("");
+      setConfirmPassword("");
+    }
+
+    handleRemove();
+  };
+  
+  // handle logout
+  const handleRemove = () => {
+    localStorage.removeItem("ACCESS_TOKEN");
+    navigate("/login");
+  };
 
   return (
     <>
       <header className="gap-5 border-b-2 border-b-[#FFCC15] pb-8 px-5 rounded-[30px] mt-5">
+      <Toaster position="top-center" reverseOrder={false} />
         <div className="flex items-center gap-4">
           <Avatar className="w-[116px] h-[116px]">
-            <AvatarImage width={116} height={116} src={avatar} />
+            <AvatarImage width={116} height={116} src={user?.avatar} />
           </Avatar>
           <h1 className=" text-white text-center font-inter text-[20px] font-bold tracking-[1px]">
-            Brooklyn Simmons
+            {user?.fullName}
           </h1>
           <Dialog>
             <DialogTrigger asChild>
@@ -76,7 +142,7 @@ export const Profile = () => {
             <DialogContent className="sm:max-w-[425px]">
               <DialogHeader>
                 <DialogTitle className="text-[#1C2C57] font-bold text-[20px]">
-                  Username o'zgartirish
+                   Ismni o'zgartirish
                 </DialogTitle>
               </DialogHeader>
               <div className="grid gap-4 py-4">
@@ -85,17 +151,20 @@ export const Profile = () => {
                     htmlFor="username"
                     className="text-right text-[#1C2C57] font-bold text-[15px]"
                   >
-                    Username
+                    Ismni o'zgartirish
                   </Label>
                   <Input
                     id="username"
                     className="col-span-3 border-yellow-400"
+                    placeholder={user?.fullName}
+                    defaultValue={user?.fullName}
+                    onChange={(e) => setChangeFullName(e.target.value)}
                   />
                 </div>
               </div>
               <DialogFooter>
-                <Button type="submit" className="bg-[#1C2C57]">
-                  Save changes
+                <Button onClick={handleNameChange} type="submit" className="bg-[#1C2C57]">
+                  Saqlash
                 </Button>
               </DialogFooter>
             </DialogContent>
@@ -175,7 +244,7 @@ export const Profile = () => {
       </Accordion>
 
       <div className="px-4 mt-5">
-        <Drawer >
+        <Drawer>
           <DrawerTrigger className="w-full text-white text-center font-inter text-[25px] font-bold tracking-[1px] mt-2 flex items-center gap-2">
             <button className="w-full  bg-white p-3 rounded-lg flex items-center gap-5 border-2 border-solid border-yellow-400 mb-4">
               <FaRegEdit size={20} color="#1C2C57" />
@@ -190,18 +259,23 @@ export const Profile = () => {
                 <span className="text-white text-start block font-bold text-[15px] mb-2">
                   Usernameni o'zgartirish
                 </span>
-                <Input id="username" className="col-span-3 border-yellow-400 text-black" />
-                <Button className="w-full text-[#1C2C57] bg-[#FFCC15] mt-10 font-bold text-[15px] hover:bg-[#FFCC15]">O'zgartirish</Button>
+                <Input
+                  id="username"
+                  className="col-span-3 border-yellow-400 text-black"
+                  onChange={(e) => setChangeUsername(e.target.value)}
+                  defaultValue={user?.username}
+                />
+                <Button onClick={handleUserNameChange} className="w-full text-[#1C2C57] bg-[#FFCC15] mt-10 font-bold text-[15px] hover:bg-[#FFCC15]">
+                  O'zgartirish
+                </Button>
               </DrawerDescription>
             </DrawerHeader>
           </DrawerContent>
         </Drawer>
 
-            
-
-            <Drawer >
+        <Drawer>
           <DrawerTrigger className="w-full text-white text-center font-inter text-[25px] font-bold tracking-[1px] flex items-center gap-2">
-          <button className="w-full bg-white p-3 rounded-lg flex items-center gap-5 border-2 border-solid border-yellow-400 mb-4">
+            <button className="w-full bg-white p-3 rounded-lg flex items-center gap-5 border-2 border-solid border-yellow-400 mb-4">
               <IoMdLock size={20} color="#1C2C57" />
               <span className="text-[#1C2C57] font-bold text-[15px]">
                 Profile parolini o'zgartirish
@@ -209,42 +283,58 @@ export const Profile = () => {
             </button>
           </DrawerTrigger>
           <DrawerContent className="bg-[#1C2C57] rounded-[20px] border-none ">
-              <DrawerDescription className="">
+            <DrawerDescription className="">
               <div className="grid gap-4 py-4">
-              <div className="flex flex-col items-start gap-2 px-4">
-                <Label
-                  htmlFor="username"
-                  className="text-right text-white font-bold text-[15px]"
-                >
-                  Parol
-                </Label>
-                <Input id="username" className="col-span-3 border-yellow-400" />
+                <div className="flex flex-col items-start gap-2 px-4">
+                  <Label
+                    htmlFor="password"
+                    className="text-right text-white font-bold text-[15px]"
+                  >
+                    Eski parol
+                  </Label>
+                  <Input
+                    onChange={(e) => setPassword(e.target.value)}
+                    id="password"
+                    className="col-span-3 border-yellow-400 text-black"
+                  />
+                </div>
+                <div className="flex flex-col items-start gap-2 px-4">
+                  <Label
+                    htmlFor="password"
+                    className="text-right text-white font-bold text-[15px]"
+                  >
+                    Yangi parol
+                  </Label>
+                  <Input
+                    onChange={(e) => setNewPassword(e.target.value)}
+                    id="password"
+                    className="col-span-3 border-yellow-400 text-black"
+                  />
+                </div>
+                <div className="flex flex-col items-start gap-2 px-4">
+                  <Label
+                    htmlFor="username"
+                    className="text-right text-white font-bold text-[15px]"
+                  >
+                    Yangi parolni tasdiqlash
+                  </Label>
+                  <Input
+                    onChange={(e) => setConfirmPassword(e.target.value)}
+                    id="username"
+                    className="col-span-3 border-yellow-400 text-black"
+                  />
+                </div>
+                <div className="px-4 mt-5">
+                  <Button
+                    onClick={handlePasswordChange}
+                    type="submit"
+                    className="w-full hover:bg-[#FFCC15] bg-[#FFCC15] text-[#1C2C57] "
+                  >
+                    Save changes
+                  </Button>
+                </div>
               </div>
-              <div className="flex flex-col items-start gap-2 px-4">
-                <Label
-                  htmlFor="username"
-                  className="text-right text-white font-bold text-[15px]"
-                >
-                  Eski parol
-                </Label>
-                <Input id="username" className="col-span-3 border-yellow-400" />
-              </div>
-              <div className="flex flex-col items-start gap-2 px-4">
-                <Label
-                  htmlFor="username"
-                  className="text-right text-white font-bold text-[15px]"
-                >
-                  Yangi parol
-                </Label>
-                <Input id="username" className="col-span-3 border-yellow-400" />
-              </div>
-              <div className="px-4 mt-5">
-              <Button type="submit" className="w-full hover:bg-[#FFCC15] bg-[#FFCC15] text-[#1C2C57] ">
-                  Save changes
-              </Button>
-              </div>
-            </div>
-              </DrawerDescription>
+            </DrawerDescription>
           </DrawerContent>
         </Drawer>
 
@@ -263,8 +353,13 @@ export const Profile = () => {
               <AlertDialogDescription></AlertDialogDescription>
             </AlertDialogHeader>
             <AlertDialogFooter className="flex ">
-              <AlertDialogCancel className="bg-[#FFCC15] hover:bg-[#FFCC15] text-[#1C2C57]">Bekor qilish</AlertDialogCancel>
-              <button onClick={handleRemove} className="border-2 p-2 rounded-lg bg-red-700 text-[#1C2C57]">
+              <AlertDialogCancel className="bg-[#FFCC15] hover:bg-[#FFCC15] text-[#1C2C57]">
+                Bekor qilish
+              </AlertDialogCancel>
+              <button
+                onClick={handleRemove}
+                className="border-2 p-2 rounded-lg bg-red-700 text-[#1C2C57]"
+              >
                 Chiqish
               </button>
             </AlertDialogFooter>

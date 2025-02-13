@@ -10,14 +10,12 @@ export const branchApi = baseApi.injectEndpoints({
                 method: 'GET',
             }),
         }),
-
         getBranch: builder.query<GetBranchResponse, GetBranchRequest>({
             query:({id}) => ({
                 url:PATHS.BRANCH_ID + id,
                 method: 'GET',
             }),
         }),
-
     }),
 })
 

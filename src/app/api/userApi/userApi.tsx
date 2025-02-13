@@ -1,22 +1,36 @@
 import { baseApi } from "../baseApi";
 import { PATHS } from "./paths";
-import { GetUserRequest, GetUserResponse, User } from "./types";
+import { ChangePasswordRequest, ChangePasswordResponse, GetAllUsersRequest, GetAllUsersResponse, GetUserRequest, GetUserResponse, UpdateUserRequest, UpdateUserResponse } from "./types";
 
 export const userApi = baseApi.injectEndpoints({
     endpoints: (builder) => ({
-        getAllUsers: builder.query<GetUserResponse, GetUserRequest>({
+        getSingleUser: builder.query<GetUserResponse, GetUserRequest>({
             query: () => ({
-                url: PATHS.ALL,
+                url: PATHS.SINGLE_USER,
                 method: 'GET',
             }),
         }),
-        getSingleUser: builder.query<User, {id:string}> ({
-            query: ({id}) => ({
-                url: PATHS.USER_ID + id,
+        getAllUsers: builder.query<GetAllUsersResponse, GetAllUsersRequest>({
+            query: () => ({
+                url: PATHS.ALL_USER,
                 method: 'GET',
+            })
+        }),
+        updateUserPassword:builder.mutation<ChangePasswordResponse, ChangePasswordRequest>({
+            query: (body) => ({
+                url: PATHS.USER_PASSWORD,
+                method: 'PATCH',
+                body,
+            }),
+        }),
+        updateUser:builder.mutation<UpdateUserResponse, UpdateUserRequest>({
+            query: (body) => ({
+                url:PATHS.USER_ID + body.id,
+                method: 'PATCH',
+                body,
             })
         })
     }),
 })
 
-export const { useGetAllUsersQuery, useGetSingleUserQuery } = userApi;
+export const { useGetAllUsersQuery, useGetSingleUserQuery, useUpdateUserPasswordMutation, useUpdateUserMutation } = userApi;

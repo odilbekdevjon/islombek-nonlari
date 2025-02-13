@@ -60,14 +60,17 @@ export const Main = () => {
           className="relative left-12"
           size={25}
           color="#FFCC15"
+          cursor={'pointer'}
         />
       </header>
+
       <div className="w-full  mt-5">
         <div className="mt-5 ml-5">
           <BiSolidMessageError
-            onClick={() => navigate("/messages")}
+            onClick={() => navigate("/information")}
             size={25}
             color="#FFCC15"
+            cursor={'pointer'}
           />
         </div>
         <div className="flex gap-5 mt-10 justify-center px-5">

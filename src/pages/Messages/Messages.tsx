@@ -5,13 +5,11 @@ import { Button } from "../../components/ui/button";
 import { Drawer, DrawerContent, DrawerTrigger,} from "../../components/ui/drawer";
 import {Select,SelectContent,SelectGroup,SelectItem,SelectTrigger,SelectValue,} from "../../components/ui/select";
 // image
-import person from "../../assets/person.svg";
 import { IoPersonAddSharp } from "react-icons/io5";
 import { useGetAllMessagesQuery } from "../../app/api/messagesApi";
 
 export const Messages = () => {
-  
-  const {data} = useGetAllMessagesQuery([]);
+  const {data} = useGetAllMessagesQuery([]);  
   
   const navigate = useNavigate();
   const [open, setOpen] = useState(false) ;
@@ -27,7 +25,7 @@ export const Messages = () => {
           data?.map((item) => {
             return(
               <Alert key={item.chat?._id || '1'} onClick={() => navigate(`/message/${item.chat?._id}`)} className="flex gap-2 mb-5 p-2">
-                <img src={person} width={50} alt="person" />
+                <img className="w-[50px] h-[50px]" src={item.chat?.avatar} width={50} height={50} alt="person" />
                 <AlertDescription  >
                   <span className="font-bold text-[14px] text-[#1C2C57]">
                     {item.chat?.fullName || 'Not found'}

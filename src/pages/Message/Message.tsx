@@ -1,3 +1,13 @@
+import { useEffect, useState } from "react";
+import { io } from "socket.io-client";
+const socket = io("https://bakery.the-watcher.uz");
+type Message = {
+  id?: string;
+  content: string;
+  createdAt?: string;
+  from: string;
+  to: string;
+};
 import {
   Avatar,
   AvatarFallback,
@@ -5,46 +15,52 @@ import {
 } from "../../components/ui/avatar";
 import { AlertTitle } from "../../components/ui/alert";
 import dayjs from "dayjs";
-
 // images
 import { FaArrowLeftLong } from "react-icons/fa6";
 import { useNavigate, useParams } from "react-router-dom";
 import { IoSend } from "react-icons/io5";
-import { useState } from "react";
+// api
 import { useGetSingleUserQuery } from "../../app/api/userApi";
+import { useGetMessageQuery, usePostMessageMutation } from "../../app/api";
 
 
 export const Message = () => {
   const { id } = useParams();
-  const {data } = useGetSingleUserQuery({id: id as string});
-  
+  const { data } = useGetSingleUserQuery({id: id as string});
+  const {data:info, refetch} = useGetMessageQuery(id);
+  const [post] = usePostMessageMutation();
   const navigate = useNavigate();
   const [message, setMessage] = useState("");
-  const [messages, setMessages] = useState([
-    {
-      sender: "Shuhrat",
-      text: "Salom! Bugungi darsni muhokama qilamizmi?",
-      time: "19:45",
-    },
-  ]);
+  const [messages, setMessages] = useState<Message[]>([]);
 
-  // Xabar yuborish funksiyasi
-  const sendMessage = () => {
-    if (message.trim()) {
-      const newMessage = {
-        sender: "You",
-        text: message,
-        time: new Date().toLocaleTimeString([], {
-          hour: "2-digit",
-          minute: "2-digit",
-        }),
-      };
-      setMessages([...messages, newMessage]); 
-      setMessage(""); 
+
+  useEffect(() => {
+    socket.on("message", (newMessage) => {
+      if (newMessage.to === id || newMessage.from === id) {
+        setMessages([...messages, newMessage]);
+      }
+    });
+
+    return () => {
+      socket.off("message");
+    };
+  }, [id]);
+
+  const sendMessage = async () => {
+    if (!message.trim()) return;
+  
+    try {
+      const response = await post({ to: id as string, content: message }).unwrap();
+      socket.emit("message", response);
+  
+      // setMessages((prevMessages) => [...prevMessages, response]);
+      setMessage("");
+      refetch();
+    } catch (error) {
+      console.error("Xabar yuborishda xatolik:", error);
     }
   };
 
-  // Enter tugmasi bilan xabar yuborish
   const handleKeyDown = (e:React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter") {
       sendMessage();
@@ -67,41 +83,41 @@ export const Message = () => {
         </h1>
       </header>
 
-      <div className="flex-grow p-5 overflow-y-auto space-y-5">
-        {messages.map((msg, index) => (
+      <div className="flex-row-reverse p-5 overflow-y-auto space-y-5">
+        {info?.map((msg, index) => (
           <div
             key={index}
             className={`flex ${
-              msg.sender === "You" ? "justify-end" : "justify-start"
+              msg.from === id ? "justify-end" : "justify-start"
             }`}
           >
             <div
               className={`${
-                msg.sender === "You" ? "bg-[#6C63FF]" : "bg-white"
+                msg.from === id ? "bg-[#6C63FF]" : "bg-white"
               } p-4 rounded-lg shadow-lg relative max-w-xs`}
             >
-              {msg.sender !== "You" && (
+              {msg.from !== id && (
                 <AlertTitle className="text-lg font-bold mb-2">
                   {data?.fullName}
                 </AlertTitle>
               )}
               <p
                 className={`text-sm ${
-                  msg.sender === "You" ? "text-white" : "text-[#1C2C57]"
+                  msg.from === id ? "text-white" : "text-[#1C2C57]"
                 }`}
               >
-                {msg.text}
+                {msg.content}
               </p>
               <span
                 className={`block text-xs ${
-                  msg.sender === "You"
+                  msg.from  === id
                     ? "text-gray-300"
                     : "text-[#1C2C57]"
                 } absolute bottom-1 right-2 `}
               >
-                {dayjs(data?.createdAt).format("YYYY-MM-DD")}
+                {dayjs(msg?.createdAt).format('HH:MM')}
               </span>
-              {msg.sender !== "You" ? (
+              {msg.from !== id ? (
                 <div className="absolute left-[-9px] top-[50%] transform -translate-y-1/2 w-0 h-0 border-y-[10px] border-y-transparent border-r-[10px] border-r-white"></div>
               ) : (
                 <div className="absolute right-[-9px] top-[50%] transform -translate-y-1/2 w-0 h-0 border-y-[10px] border-y-transparent border-l-[10px] border-l-[#6C63FF]"></div>
@@ -116,7 +132,7 @@ export const Message = () => {
         <input
           value={message}
           onChange={(e) => setMessage(e.target.value)}
-          onKeyDown={handleKeyDown} // Enter tugmasi orqali yuborish
+          onKeyDown={handleKeyDown} 
           type="text"
           placeholder="Type a message..."
           className="flex-grow bg-gray-700 text-white p-2 rounded-lg focus:outline-none"
