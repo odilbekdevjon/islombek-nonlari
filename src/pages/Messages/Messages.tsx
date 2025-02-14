@@ -7,9 +7,13 @@ import {Select,SelectContent,SelectGroup,SelectItem,SelectTrigger,SelectValue,} 
 // image
 import { IoPersonAddSharp } from "react-icons/io5";
 import { useGetAllMessagesQuery } from "../../app/api/messagesApi";
+// import { useGetAllUsersQuery } from "../../app/api";
 
 export const Messages = () => {
   const {data} = useGetAllMessagesQuery([]);  
+  // const info = useGetAllUsersQuery({})
+  // console.log(info);
+  
   
   const navigate = useNavigate();
   const [open, setOpen] = useState(false) ;
