@@ -10,11 +10,8 @@ import { useGetAllUsersQuery } from "../../app/api";
 import { ROLES } from "../../constants";
 
 export const Messages = () => {
-  const {data} = useGetAllMessagesQuery([]);  
-  const {data:allUsers} = useGetAllUsersQuery({roles:Object.values(ROLES).filter(r => r !== ROLES.CUSTOMER)});
-  console.log(allUsers);
-  
-  
+  const {data , isLoading } = useGetAllMessagesQuery([]);  
+  const {data:allUsers} = useGetAllUsersQuery({roles:Object.values(ROLES).filter(r => r !== ROLES.CUSTOMER)});  
   const navigate = useNavigate();
   const [open, setOpen] = useState(false);
   const [selectedUser, setSelectedUser] = useState("");
@@ -42,7 +39,7 @@ export const Messages = () => {
                 </AlertDescription>
               </Alert>
             )
-          })
+          }) || (isLoading && "Loading...")
         }
       </div>
 

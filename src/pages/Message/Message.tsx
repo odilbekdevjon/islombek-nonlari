@@ -1,13 +1,4 @@
 import { useEffect, useState } from "react";
-import { io } from "socket.io-client";
-const socket = io("https://bakery.the-watcher.uz");
-type Message = {
-  id?: string;
-  content: string;
-  createdAt?: string;
-  from: string;
-  to: string;
-};
 import {
   Avatar,
   AvatarFallback,
@@ -20,24 +11,26 @@ import { FaArrowLeftLong } from "react-icons/fa6";
 import { useNavigate, useParams } from "react-router-dom";
 import { IoSend } from "react-icons/io5";
 // api
-import { useGetSingleUserQuery } from "../../app/api/userApi";
+import { useGetUserByIdQuery } from "../../app/api/userApi";
 import { useGetMessageQuery, usePostMessageMutation } from "../../app/api";
+import { socket } from "../../utils";
 
 
 export const Message = () => {
   const { id } = useParams();
-  const { data } = useGetSingleUserQuery({id: id as string});
+  const { data } = useGetUserByIdQuery(id as string);
+  console.log(data);
+  
   const {data:info, refetch} = useGetMessageQuery(id);
-  const [post] = usePostMessageMutation();
+  const [post, {isLoading}] = usePostMessageMutation();
   const navigate = useNavigate();
   const [message, setMessage] = useState("");
-  const [messages, setMessages] = useState<Message[]>([]);
 
 
   useEffect(() => {
     socket.on("message", (newMessage) => {
       if (newMessage.to === id || newMessage.from === id) {
-        setMessages([...messages, newMessage]);
+        refetch()
       }
     });
 
@@ -47,13 +40,13 @@ export const Message = () => {
   }, [id]);
 
   const sendMessage = async () => {
+
     if (!message.trim()) return;
-  
+
     try {
       const response = await post({ to: id as string, content: message }).unwrap();
       socket.emit("message", response);
   
-      // setMessages((prevMessages) => [...prevMessages, response]);
       setMessage("");
       refetch();
     } catch (error) {
@@ -84,40 +77,40 @@ export const Message = () => {
       </header>
 
       <div className="flex-row-reverse p-5 overflow-y-auto space-y-5">
-        {info?.map((msg, index) => (
+        {info?.map((msg, index) => ((msg = info[info.length - index - 1]),
           <div
             key={index}
             className={`flex ${
-              msg.from === id ? "justify-end" : "justify-start"
+              msg.to === id ? "justify-end" : "justify-start"
             }`}
           >
             <div
               className={`${
-                msg.from === id ? "bg-[#6C63FF]" : "bg-white"
+                msg.to === id ? "bg-[#6C63FF]" : "bg-white"
               } p-4 rounded-lg shadow-lg relative max-w-xs`}
             >
-              {msg.from !== id && (
+              {msg.to !== id && (
                 <AlertTitle className="text-lg font-bold mb-2">
                   {data?.fullName}
                 </AlertTitle>
               )}
               <p
                 className={`text-sm ${
-                  msg.from === id ? "text-white" : "text-[#1C2C57]"
+                  msg.to === id ? "text-white" : "text-[#1C2C57]"
                 }`}
               >
                 {msg.content}
               </p>
               <span
                 className={`block text-xs ${
-                  msg.from  === id
+                  msg.to === id
                     ? "text-gray-300"
                     : "text-[#1C2C57]"
                 } absolute bottom-1 right-2 `}
               >
                 {dayjs(msg?.createdAt).format('HH:MM')}
               </span>
-              {msg.from !== id ? (
+              {msg.to !== id ? (
                 <div className="absolute left-[-9px] top-[50%] transform -translate-y-1/2 w-0 h-0 border-y-[10px] border-y-transparent border-r-[10px] border-r-white"></div>
               ) : (
                 <div className="absolute right-[-9px] top-[50%] transform -translate-y-1/2 w-0 h-0 border-y-[10px] border-y-transparent border-l-[10px] border-l-[#6C63FF]"></div>
@@ -126,7 +119,6 @@ export const Message = () => {
           </div>
         ))}
       </div>
-
 
       <div className="flex items-center p-4 bg-[#1C2C57] border-t border-gray-500 mt-5">
         <input
@@ -138,6 +130,7 @@ export const Message = () => {
           className="flex-grow bg-gray-700 text-white p-2 rounded-lg focus:outline-none"
         />
         <button
+          disabled={isLoading}
           onClick={sendMessage}
           className="ml-2 bg-[#FFCC15] p-2 rounded-lg"
         >
