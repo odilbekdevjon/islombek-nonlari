@@ -53,7 +53,7 @@ export const Messages = () => {
           <div className="px-4 flex-grow overflow-y-auto">
           <Select onValueChange={setSelectedUser} open={open} onOpenChange={setOpen} >
           <SelectTrigger className="w-full mt-8 mb-36 none">
-            <SelectValue placeholder="Select a name" />
+            <SelectValue placeholder="Xodimni tanlang" />
           </SelectTrigger>
           <SelectContent className=" absolute top-full mt-2 z-50 max-h-60 overflow-y-auto bg-white shadow-lg rounded-md">
             <SelectGroup >
