@@ -1,6 +1,6 @@
 export interface GetAllNotificationsRequest {[]}
 export interface GetAllNotificationsResponse {
-    notifications: Notification[];
+    notifications: Notifications[];
 }
 
 export interface GetNotificationRequest {

@@ -12,9 +12,16 @@ import {
 import { Button } from "../../components/ui/button";
 import { FaCalendarAlt } from "react-icons/fa";
 import { CiClock2 } from "react-icons/ci";
+import { useGetAllNotificationsQuery } from "../../app/api";
 
 export const Notification = () => {
   const navigate = useNavigate();
+
+  const {data}  = useGetAllNotificationsQuery([]);
+  console.log(data);
+  
+
+
   return (
     <div>
       <header className="flex gap-16 items-center border-b-2 border-b-[#FFCC15] pb-5 px-5 rounded-[30px] mt-3">

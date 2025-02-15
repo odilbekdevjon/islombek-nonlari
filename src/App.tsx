@@ -11,7 +11,7 @@ import { Notification } from "./pages/Notification";
 import { Messages } from "./pages/Messages";
 import { Profile } from "./pages/Profile";
 import { Message } from "./pages/Message";
-import { Information } from "./pages/Information";
+import { Information } from "./pages/Complaint";
 import { ProtectedRoute } from "./components/ProtectedRoute"; 
 import { NotFound } from "./pages/NotFound/NotFound";
 

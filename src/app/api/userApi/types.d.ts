@@ -1,4 +1,6 @@
-interface User {
+import { ROLES } from "../../../constants";
+
+export interface User {
     _id:string;
     fullName:string;
     username:string;
@@ -9,23 +11,16 @@ interface User {
     avatar:string;
 }
 
-export interface GetUserByIdRequest { id: string;}
+export interface GetUserByIdRequest  { id: string;}
 export interface GetUserByIdResponse {[]}
 
 export type GetUserRequest  = {}
-export type GetUserResponse = {
-    _id:string;
-    fullName:string;
-    username:string;
-    role:string;
-    balance:number;
-    createdAt:string;
-    updatedAt:string;
-    avatar:string;
-}
+export type GetUserResponse = User;
 
-export type GetAllUsersResponse = {}
-export type GetAllUsersRequest = {}
+export type GetAllUsersResponse = User[];
+export type GetAllUsersRequest = {
+    roles: ROLES[];
+}
 
 export type ChangePasswordRequest = {
     oldPassword:string;
