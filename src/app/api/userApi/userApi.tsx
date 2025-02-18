@@ -36,7 +36,7 @@ export const userApi = baseApi.injectEndpoints({
                 method: 'PATCH',
                 body,
             })
-        })
+        }),
     }),
 })
 
@@ -46,5 +46,5 @@ export const {
     useGetUserByIdQuery, 
     useLazyGetUserByIdQuery, 
     useUpdateUserPasswordMutation, 
-    useUpdateUserMutation 
+    useUpdateUserMutation ,
 } = userApi;

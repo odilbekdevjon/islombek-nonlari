@@ -55,18 +55,22 @@ import {
 } from "../../app/api";
 import { useState } from "react";
 import { Toaster, toast } from "react-hot-toast";
+import { useUploadImageMutation } from "../../app/api/uploadApi";
 
 
 export const Profile = () => {
   const navigate = useNavigate();
   const { data: user } = useGetSingleUserQuery({});
   const [updateUserPassword] = useUpdateUserPasswordMutation();
+  const [ updateUser ] = useUpdateUserMutation({});
+  const [uploadImage] = useUploadImageMutation();
+
   const [password, setPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [ changeUserName , setChangeUsername] = useState("");
   const [ changeFullName , setChangeFullName] = useState("");
-  const [ updateUser ] = useUpdateUserMutation({});
+  const [changeImage, setChangeImage] = useState<File | null>(null);
 
   // change name
   const handleNameChange = async () => {
@@ -82,6 +86,25 @@ export const Profile = () => {
     }
     window.location.reload();
   }
+
+  const handleImageChange = async () => {
+    if (!changeImage) return;
+    const formData = new FormData();
+    formData.append("file", changeImage);
+    const url = await uploadImage(formData).unwrap();
+    const response = await updateUser({
+      id: user?._id as string,
+      avatar: url,
+    });
+    if (response.error) {
+      toast.error("Image change failed. Please try again.");
+      return;
+    } else {
+      toast.success("Image changed successfully!");
+    }
+    window.location.reload();
+  }
+  
 
   // change username
   const handleUserNameChange = async () => {
@@ -142,7 +165,7 @@ export const Profile = () => {
             <DialogContent className="sm:max-w-[425px]">
               <DialogHeader>
                 <DialogTitle className="text-[#1C2C57] font-bold text-[20px]">
-                   Ismni o'zgartirish
+                  Ismni o'zgartirish
                 </DialogTitle>
               </DialogHeader>
               <div className="grid gap-4 py-4">
@@ -170,9 +193,45 @@ export const Profile = () => {
             </DialogContent>
           </Dialog>
         </div>
-        <div className="w-14 h-14 p-[12px] rounded-[25px] absolute top-20 left-24 bg-[#677294CC]">
+        <button className="w-14 h-14 p-[12px] rounded-[25px] absolute top-20 left-24 bg-[#677294CC]">
           <FaCamera className="" size={30} color="white" />
-        </div>
+        </button>
+        <Dialog>
+            <DialogTrigger asChild>
+              <button className="w-14 h-14 p-[12px] rounded-[25px] absolute top-20 left-24 bg-[#677294CC]">
+                <FaCamera className="" size={30} color="white" />
+              </button>
+            </DialogTrigger>
+            <DialogContent className="sm:max-w-[425px]">
+              <DialogHeader>
+                <DialogTitle className="text-[#1C2C57] font-bold text-[20px]">
+                  Rasimni o'zgartirish
+                </DialogTitle>
+              </DialogHeader>
+              <div className="grid gap-4 py-4">
+                <div className="flex flex-col items-start gap-2">
+                  <Label
+                    htmlFor="username"
+                    className="text-right text-[#1C2C57] font-bold text-[15px]"
+                  >
+                    Rasimni o'zgartirish
+                  </Label>
+                  <Input
+                    id="image"
+                    className="col-span-3 border-yellow-400 border-2 border-solid"
+                    type="file"
+                    onChange={(e) => setChangeImage(e.target.files?.[0] || null)}
+                    accept="image/*"
+                  />
+                </div>
+              </div>
+              <DialogFooter>
+                <Button onClick={handleImageChange} type="submit" className="bg-[#1C2C57]">
+                  Saqlash
+                </Button>
+              </DialogFooter>
+            </DialogContent>
+          </Dialog>
       </header>
       <Accordion type="single" collapsible className=" px-4  mt-14">
         <AccordionItem value="item-1">

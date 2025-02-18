@@ -121,7 +121,6 @@ export const Information = () => {
           </div>
         </DrawerContent>
       </Drawer>
-
     </>
   );
 };

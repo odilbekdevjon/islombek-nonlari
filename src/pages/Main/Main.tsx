@@ -1,3 +1,9 @@
+interface Branch {
+  _id: string;
+  title: string;
+  image?: string;
+}
+
 import { Link, useNavigate } from "react-router-dom";
 import {
   Avatar,
@@ -21,15 +27,14 @@ import { IoMdNotifications } from "react-icons/io";
 import { FaAngleDown } from "react-icons/fa6";
 import brachImage from "../../assets/branch.svg";
 import { useGetAllBranchesQuery } from "../../app/api";
+import { useGetAllRetsepsQuery } from "../../app/api/retsepApi";
 
 export const Main = () => {
   const navigate = useNavigate();
-  interface Branch {
-    _id: string;
-    title: string;
-    image?: string;
-  }
   const { data } = useGetAllBranchesQuery([]) as { data?: Branch[] };
+  const { data: retsepts } = useGetAllRetsepsQuery([]);
+  console.log(retsepts);
+
 
   return (
     <div className="overflow-y-auto">
