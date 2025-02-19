@@ -63,7 +63,7 @@ export const Information = () => {
             {
               complaints?.filter(item => item.to._id == LoginUser?._id).map((complaint) => {
                 return(
-                  <AccordionContent key={complaint._id} className="bg-white text-[] p-2 border-2 border-[#FFCC15] rounded-lg">
+                  <AccordionContent key={complaint._id} className="bg-white text-[] p-2 border-2 border-[#FFCC15] rounded-lg mb-3">
                     <h2 className="text-[#1C2C57] font-bold text-[18px] mb-2">{complaint.from?.role}</h2>
                     <p className="text-[#1C2C57] font-bold text-[14px] ">{complaint.content}</p>
                     <span className="block  text-end text-[#C71A1A] text-[15px] font-bold mt-2">{complaint.from?.fullName}</span>

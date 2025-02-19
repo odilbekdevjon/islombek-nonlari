@@ -10,9 +10,13 @@ import {
 } from "../../components/ui/accordion";
 import { Alert, AlertDescription } from "../../components/ui/alert";
 import { useNavigate } from "react-router-dom";
+import { useGetAllRetsepsQuery } from "../../app/api/retsepApi";
 
 export const Storage = () => {
   const navigate = useNavigate();
+  const { data: retsepts } = useGetAllRetsepsQuery([]);
+  console.log(retsepts);
+
   return (
     <div>
       <header className="flex justify-between items-center border-b-2 border-b-[#FFCC15] pb-5 px-5 rounded-[30px] mt-4">

@@ -4,7 +4,7 @@ import { GetAllRetsepsRequest, GetAllRetsepsResponse, GetRetsepRequest, GetRetse
 
 export const retsepApi = baseApi.injectEndpoints({
     endpoints: (builder) => ({
-        getAllRetseps: builder.query<GetAllRetsepsResponse, GetAllRetsepsRequest>({
+        getAllRetseps: builder.query<GetAllRetsepsResponse[], GetAllRetsepsRequest>({
             query: () => ({
                 url: PATHS.ALL,
                 method: 'GET',

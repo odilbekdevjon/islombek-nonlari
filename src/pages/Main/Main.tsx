@@ -98,30 +98,26 @@ export const Main = () => {
         <h4 className="text-[#FFCC15] font-bold text-[20px] tracking-[5px] mb-3">
           Retsept
         </h4>
-        <Alert className="flex justify-between items-center py-2 mb-2">
-          <AlertTitle className="font-bold text-[16px]">Un</AlertTitle>
-          <AlertDescription className="font-bold text-[16px]">
-            1 qop
-          </AlertDescription>
-        </Alert>
-        <Alert className="flex justify-between items-center py-2 mb-2">
-          <AlertTitle className="font-bold text-[16px] ">Saryog'</AlertTitle>
-          <AlertDescription className="font-bold text-[16px]">
-            1 kg
-          </AlertDescription>
-        </Alert>
-        <Alert className="flex justify-between items-center py-2 mb-2">
-          <AlertTitle className="font-bold text-[16px]">Tuz</AlertTitle>
-          <AlertDescription className="font-bold text-[16px]">
-            1 kg
-          </AlertDescription>
-        </Alert>
-        <Alert className="flex justify-between items-center py-2">
-          <AlertTitle className="font-bold text-[16px]">Droj</AlertTitle>
-          <AlertDescription className="font-bold text-[16px]">
-            5 kg
-          </AlertDescription>
-        </Alert>
+          {
+            retsepts !== undefined && retsepts.length > 0 ? (
+              retsepts?.filter((retsept:any) => typeof retsept.amount === "number" && retsept.amount > 0))?.map((retsep:any) => (
+                <Alert key={retsep._id} className="flex justify-between items-center py-2 mb-2">
+                  <AlertTitle className="font-bold text-[16px]">
+                    {retsep.title}
+                  </AlertTitle>
+                  <AlertDescription className="font-bold text-[16px]">
+                    {retsep.amount } {retsep.scope} 
+                  </AlertDescription>
+                </Alert>
+              )
+            ) : (
+              <Alert className="flex justify-center items-center py-2">
+                <AlertTitle className="font-bold text-[16px]">
+                  Ushbu boshqa branchda yo'q retseptlar
+                </AlertTitle>
+              </Alert>
+            )
+          }
       </div>
     </div>
   );
