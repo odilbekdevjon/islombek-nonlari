@@ -4,7 +4,7 @@ import { GetAllNotificationsRequest, GetAllNotificationsResponse, GetNotificatio
 
 export const notificationApi = baseApi.injectEndpoints({
     endpoints: (builder) => ({
-        getAllNotifications: builder.query<GetAllNotificationsResponse, GetAllNotificationsRequest>({
+        getAllNotifications: builder.query<GetAllNotificationsResponse[], GetAllNotificationsRequest>({
             query: () => ({
                 url: PATHS.ALL,
                 method: 'GET',

@@ -4,7 +4,7 @@ import { GetAllBranchesRequest, GetAllBranchesResponse, GetBranchRequest, GetBra
 
 export const branchApi = baseApi.injectEndpoints({
     endpoints: (builder) => ({
-        getAllBranches: builder.query<GetAllBranchesResponse, GetAllBranchesRequest>({
+        getAllBranches: builder.query<GetAllBranchesResponse[], GetAllBranchesRequest>({
             query: () => ({
                 url: PATHS.ALL,
                 method: 'GET',

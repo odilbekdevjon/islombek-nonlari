@@ -19,7 +19,6 @@ import { socket } from "../../utils";
 export const Message = () => {
   const { id } = useParams();
   const { data } = useGetUserByIdQuery(id as string);
-  console.log(data);
   
   const {data:info, refetch} = useGetMessageQuery(id);
   const [post, {isLoading}] = usePostMessageMutation();

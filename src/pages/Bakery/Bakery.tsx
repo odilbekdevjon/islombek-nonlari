@@ -12,11 +12,13 @@ import { Input } from "../../components/ui/input";
 import { Label } from "../../components/ui/label";
 import { useState } from "react";
 import { FaPlus } from "react-icons/fa";
-
+import { useGetAllDoughroomsQuery } from "../../app/api/doughroomApi";
+import dayjs from "dayjs";
 
 export const Bakery = () => {
   const navigate = useNavigate();
   const [value, setValue] = useState("");
+  const { data } = useGetAllDoughroomsQuery([]);
 
   return (
     <>
@@ -35,45 +37,37 @@ export const Bakery = () => {
           color="#FFCC15"
         />
       </header>
-      <div className="px-4">
-        <div className="w-full bg-white border-2 border-solid border-[#FFCC15] mt-20 rounded-lg p-4 ">
-          <Alert className="bg-[#F5F6F8]  p-2">
-            <AlertDescription className="font-bold text-[#1C2C57] font-inter text-center">
-              Xamir soni: 2
-            </AlertDescription>
-          </Alert>
-          <div className="flex gap-5 mt-5">
-            <Alert className="bg-[#F5F6F8]  p-2">
-              <AlertDescription className="font-bold text-[#1C2C57] font-inter text-center">
-                Vaqti: 08:25
-              </AlertDescription>
-            </Alert>
-            <Alert className="bg-[#F5F6F8]  p-2">
-              <AlertDescription className="font-bold text-[#1C2C57] font-inter text-center">
-                Timer: 00:20:35
-              </AlertDescription>
-            </Alert>
-          </div>
-        </div>
-        <div className="w-full bg-white border-2 border-solid border-[#FFCC15] mt-5 rounded-lg p-4 ">
-          <Alert className="bg-[#F5F6F8]  p-2">
-            <AlertDescription className="font-bold text-[#1C2C57] font-inter text-center">
-              Xamir soni: 2
-            </AlertDescription>
-          </Alert>
-          <div className="flex gap-5 mt-5">
-            <Alert className="bg-[#F5F6F8]  p-2">
-              <AlertDescription className="font-bold text-[#1C2C57] font-inter text-center">
-                Vaqti: 08:25
-              </AlertDescription>
-            </Alert>
-            <Alert className="bg-[#F5F6F8]  p-2">
-              <AlertDescription className="font-bold text-[#1C2C57] font-inter text-center">
-                Timer: 00:20:35
-              </AlertDescription>
-            </Alert>
-          </div>
-        </div>
+      <div className="px-4 mt-10">
+        {data && data.length > 0 ? (
+          data.map((doughroom) =>
+            doughroom.doughs.map((dough) => (
+              <div
+                key={dough._id}
+                className="w-full bg-white border-2 border-solid border-[#FFCC15] mt-5 rounded-lg p-4"
+              >
+                <Alert className="bg-[#F5F6F8] p-2">
+                  <AlertDescription className="font-bold text-[#1C2C57] font-inter text-center">
+                    Xamir soni: {dough.count}
+                  </AlertDescription>
+                </Alert>
+                <div className="flex gap-5 mt-5">
+                  <Alert className="bg-[#F5F6F8] p-2">
+                    <AlertDescription className="font-bold text-[#1C2C57] font-inter text-center">
+                      Vaqti: {dayjs(dough.createdAt).format("HH:mm:ss")}
+                    </AlertDescription>
+                  </Alert>
+                  <Alert className="bg-[#F5F6F8] p-2">
+                    <AlertDescription className="font-bold text-[#1C2C57] font-inter text-center">
+                      Timer: 00:20:35
+                    </AlertDescription>
+                  </Alert>
+                </div>
+              </div>
+            ))
+          )
+        ) : (
+          <p className="text-white text-center mt-5">Ma'lumot yo'q...</p>
+        )}
       </div>
 
       <Dialog>
