@@ -23,22 +23,19 @@ import { useGetAllRetsepsQuery } from "../../app/api/retsepApi";
 
 export const Main = () => {
   const navigate = useNavigate();
-  const { data } = useGetAllBranchesQuery([]);
+  const { data: branches } = useGetAllBranchesQuery([]);
   const { data: retsepts } = useGetAllRetsepsQuery([]);
 
-  // Tanlangan branchni saqlash
   const [selectedBranchId, setSelectedBranchId] = useState<string | null>(null);
-  console.log(selectedBranchId);
-  
 
   return (
     <div className="overflow-y-auto">
       <header className="flex justify-center items-center border-b-2 border-b-[#FFCC15] pb-3 rounded-[30px] mt-3">
-        {data?.map((branch:any) => (
+        {branches?.map((branch: any) => (
           <Drawer key={branch._id}>
             <DrawerTrigger
               className="text-white text-center font-inter text-[25px] font-bold tracking-[1px] mt-2 flex items-center gap-2"
-              onClick={() => setSelectedBranchId(branch.branch)} // ID ni saqlaymiz
+              onClick={() => setSelectedBranchId(branch._id)}
             >
               {branch.title} <FaAngleDown />
             </DrawerTrigger>
@@ -67,6 +64,7 @@ export const Main = () => {
         />
       </header>
 
+      {/* Asosiy menyu */}
       <div className="w-full mt-5">
         <div className="mt-5 ml-5">
           <BiSolidMessageError
@@ -92,6 +90,7 @@ export const Main = () => {
         </div>
       </div>
 
+      {/* Retseptlar qismi */}
       <div className="mt-8 px-4">
         <h4 className="text-[#FFCC15] font-bold text-[20px] tracking-[5px] mb-3">
           Retsept
@@ -102,7 +101,7 @@ export const Main = () => {
               (retsept: any) =>
                 typeof retsept.amount === "number" &&
                 retsept.amount > 0 &&
-                retsept._id === selectedBranchId // Faqat tanlangan branchni chiqarish
+                (selectedBranchId === null || retsept.branchId === selectedBranchId) // Tanlangan branch yoki barcha retseptlar
             )
             .map((retsep: any) => (
               <Alert
