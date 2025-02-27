@@ -9,11 +9,12 @@ import {
 } from "../../components/ui/accordion";
 import { Alert, AlertDescription } from "../../components/ui/alert";
 import { useNavigate } from "react-router-dom";
-import { useGetAllDoughroomsQuery } from "../../app/api/doughroomApi";
+import { useGetByIdDoughroomQuery } from "../../app/api/doughroomApi";
 
 export const Storage = () => {
   const navigate = useNavigate();
-  const { data } = useGetAllDoughroomsQuery([]);
+  const branchId = localStorage.getItem("selectedBranchId")
+  const { data } = useGetByIdDoughroomQuery({id:branchId as string}, {skip:!branchId});
 
   return (
     <div>
@@ -33,15 +34,14 @@ export const Storage = () => {
         />
       </header>
       <div className="px-5">
-        {data && data.length > 0 ? (
-          data.map((storage) => (
+        {data && data.warehouse.length > 0 ? (
             <Accordion
-              key={storage._id}
+              key={data.warehouse[0]._id}
               type="single"
               collapsible
               className="w-full bg-[#fff] rounded-md mt-28 mr-5 px-5 hover:no-underline"
             >
-              {storage.warehouse.map((store) => (
+              {data.warehouse.map((store) => (
                 <AccordionItem key={store._id} value={`item-${store._id}`}>
                   <AccordionTrigger className="text-[16px] text-[#1C2C57] text-inter hover:no-underline">
                     {store.ingradient.title}
@@ -59,9 +59,8 @@ export const Storage = () => {
                 </AccordionItem>
               ))}
             </Accordion>
-          ))
         ) : (
-          <p className="text-white text-center mt-5">Ma'lumot yo'q...</p>
+          <p className="text-white text-center mt-5">Ma'lumot yuklanmoqda...</p>
         )}
       </div>
     </div>

@@ -1,6 +1,6 @@
 import { baseApi } from "../baseApi";
 import { PATHS } from "./paths";
-import { GetAllDoughroomsRequest, GetAllDoughroomsResponse, PostDoughroomsRequest, PostDoughroomsResponse } from "./types";
+import { GetAllDoughroomsRequest, GetAllDoughroomsResponse, GetByIdDoughroomRequest, GetByIdDoughroomResponse, PostDoughroomsRequest, PostDoughroomsResponse } from "./types";
 
 export const doughroomApi = baseApi.injectEndpoints({
     endpoints: (builder) => ({
@@ -10,7 +10,7 @@ export const doughroomApi = baseApi.injectEndpoints({
                 method: 'GET',
             }),
         }),
-        getDoughroom: builder.query({
+        getByIdDoughroom: builder.query<GetByIdDoughroomResponse, GetByIdDoughroomRequest>({
             query: ({id}) => ({
                 url: PATHS.DOUGHROOM_ID + id,
                 method: 'GET',
@@ -29,4 +29,4 @@ export const doughroomApi = baseApi.injectEndpoints({
     }),
 })
 
-export const { useGetAllDoughroomsQuery, useGetDoughroomQuery } = doughroomApi;
+export const { useGetAllDoughroomsQuery, useGetByIdDoughroomQuery } = doughroomApi;

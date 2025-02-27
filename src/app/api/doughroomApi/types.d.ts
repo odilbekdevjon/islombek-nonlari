@@ -47,3 +47,11 @@ export interface PostDoughroomsResponse {
   createdAt: string;
   updatedAt: string;
 }
+
+export interface GetByIdDoughroomRequest {
+  id: string;
+}
+export interface GetByIdDoughroomResponse {
+  doughs: Doughroom[];
+  warehouse: WarehouseItem[];
+}

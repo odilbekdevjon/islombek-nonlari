@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import {
   Avatar,
@@ -26,22 +26,44 @@ export const Main = () => {
   const { data: branches } = useGetAllBranchesQuery([]);
   const { data: retsepts } = useGetAllRetsepsQuery([]);
 
-  const [selectedBranchId, setSelectedBranchId] = useState<string | null>(null);
+  const [selectedBranchId, setSelectedBranchId] = useState<string | null>(
+    localStorage.getItem("selectedBranchId") || null
+  );
+  const [open, setOpen] = useState(false);
+
+  useEffect(() => {
+    if (selectedBranchId) {
+      localStorage.setItem("selectedBranchId", selectedBranchId);
+    }
+  }, [selectedBranchId]);
+
+  const handleClick = (id: string) => {
+    setSelectedBranchId(id);
+    setOpen(false); // Drawer'ni yopish
+  };
 
   return (
     <div className="overflow-y-auto">
       <header className="flex justify-center items-center border-b-2 border-b-[#FFCC15] pb-3 rounded-[30px] mt-3">
-        {branches?.map((branch: any) => (
-          <Drawer key={branch._id}>
-            <DrawerTrigger
-              className="text-white text-center font-inter text-[25px] font-bold tracking-[1px] mt-2 flex items-center gap-2"
-              onClick={() => setSelectedBranchId(branch._id)}
-            >
-              {branch.title} <FaAngleDown />
-            </DrawerTrigger>
-            <DrawerContent className="bg-[#1C2C57] rounded-[20px] border-none">
-              <DrawerHeader>
-                <DrawerDescription className="flex items-center gap-6 bg-white text-[#1C2C57] text-sm rounded-lg p-3 mb-2">
+        <Drawer open={open} onOpenChange={setOpen}>
+          <DrawerTrigger
+            className="text-white text-center font-inter text-[25px] font-bold tracking-[1px] mt-2 flex items-center gap-2"
+            onClick={() => setOpen(true)}
+          >
+            {(branches as any[])?.find(
+              (branch) => branch._id === selectedBranchId
+            )?.title || "Filial tanlash"}
+            <FaAngleDown />
+          </DrawerTrigger>
+
+          <DrawerContent className="bg-[#1C2C57] rounded-[20px] border-none">
+            <DrawerHeader>
+              {branches?.map((branch: any) => (
+                <DrawerDescription
+                  key={branch._id}
+                  onClick={() => handleClick(branch._id)}
+                  className="flex items-center gap-6 bg-white text-[#1C2C57] text-sm rounded-lg p-3 mb-2 cursor-pointer"
+                >
                   <Avatar>
                     <AvatarImage src={branch.image || brachImage} />
                     <AvatarFallback className="text-white">CN</AvatarFallback>
@@ -50,10 +72,10 @@ export const Main = () => {
                     {branch.title}
                   </DrawerTitle>
                 </DrawerDescription>
-              </DrawerHeader>
-            </DrawerContent>
-          </Drawer>
-        ))}
+              ))}
+            </DrawerHeader>
+          </DrawerContent>
+        </Drawer>
 
         <IoMdNotifications
           onClick={() => navigate("/notification")}
@@ -64,7 +86,6 @@ export const Main = () => {
         />
       </header>
 
-      {/* Asosiy menyu */}
       <div className="w-full mt-5">
         <div className="mt-5 ml-5">
           <BiSolidMessageError
@@ -90,36 +111,28 @@ export const Main = () => {
         </div>
       </div>
 
-      {/* Retseptlar qismi */}
       <div className="mt-8 px-4">
-        <h4 className="text-[#FFCC15] font-bold text-[20px] tracking-[5px] mb-3">
+        <p className="text-[#FFCC15] font-bold text-[20px] tracking-[5px] mb-3">
           Retsept
-        </h4>
-        {retsepts !== undefined && retsepts.length > 0 ? (
-          retsepts
-            ?.filter(
-              (retsept: any) =>
-                typeof retsept.amount === "number" &&
-                retsept.amount > 0 &&
-                (selectedBranchId === null || retsept.branchId === selectedBranchId) // Tanlangan branch yoki barcha retseptlar
-            )
-            .map((retsep: any) => (
-              <Alert
-                key={retsep._id}
-                className="flex justify-between items-center py-2 mb-2"
-              >
-                <AlertTitle className="font-bold text-[16px]">
-                  {retsep.title}
-                </AlertTitle>
-                <AlertDescription className="font-bold text-[16px]">
-                  {retsep.amount} {retsep.scope}
-                </AlertDescription>
-              </Alert>
-            ))
+        </p>
+        {retsepts && retsepts.length > 0 ? (
+          retsepts.map((retsep: any) => (
+            <Alert
+              key={retsep._id}
+              className="flex justify-between items-center py-2 mb-2"
+            >
+              <AlertTitle className="font-bold text-[16px]">
+                {retsep.title}
+              </AlertTitle>
+              <AlertDescription className="font-bold text-[16px]">
+                {retsep.amount} {retsep.scope}
+              </AlertDescription>
+            </Alert>
+          ))
         ) : (
           <Alert className="flex justify-center items-center py-2">
             <AlertTitle className="font-bold text-[16px]">
-              Ushbu boshqa branchda yo'q retseptlar
+              Ushbu branchda retseptlar yo'q
             </AlertTitle>
           </Alert>
         )}

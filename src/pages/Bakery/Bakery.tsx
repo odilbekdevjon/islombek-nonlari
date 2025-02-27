@@ -12,13 +12,14 @@ import { Input } from "../../components/ui/input";
 import { Label } from "../../components/ui/label";
 import { useState } from "react";
 import { FaPlus } from "react-icons/fa";
-import { useGetAllDoughroomsQuery } from "../../app/api/doughroomApi";
+import { useGetByIdDoughroomQuery } from "../../app/api/doughroomApi";
 import dayjs from "dayjs";
 
 export const Bakery = () => {
   const navigate = useNavigate();
   const [value, setValue] = useState("");
-  const { data } = useGetAllDoughroomsQuery([]);
+  const branchId = localStorage.getItem("selectedBranchId")
+  const { data } = useGetByIdDoughroomQuery({id:branchId as string}, {skip:!branchId});
 
   return (
     <>
@@ -38,9 +39,8 @@ export const Bakery = () => {
         />
       </header>
       <div className="px-4 mt-10">
-        {data && data.length > 0 ? (
-          data.map((doughroom) =>
-            doughroom.doughs.map((dough) => (
+        {data && data.doughs.length > 0 ? (
+            data?.doughs.map((dough:any) => (
               <div
                 key={dough._id}
                 className="w-full bg-white border-2 border-solid border-[#FFCC15] mt-5 rounded-lg p-4"
@@ -64,9 +64,8 @@ export const Bakery = () => {
                 </div>
               </div>
             ))
-          )
         ) : (
-          <p className="text-white text-center mt-5">Ma'lumot yo'q...</p>
+          <p className="text-white text-center mt-5">Ma'lumot yuklanmoqda...</p>
         )}
       </div>
 

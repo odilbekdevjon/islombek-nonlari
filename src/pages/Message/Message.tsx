@@ -119,14 +119,14 @@ export const Message = () => {
         ))}
       </div>
 
-      <div className="flex items-center p-4 bg-[#1C2C57] border-t border-gray-500 mt-5">
+      <div className="flex w-full items-center absolute bottom-0 p-4 bg-[#1C2C57] border-t border-gray-500 mt-5">
         <input
           value={message}
           onChange={(e) => setMessage(e.target.value)}
           onKeyDown={handleKeyDown} 
           type="text"
           placeholder="Type a message..."
-          className="flex-grow bg-gray-700 text-white p-2 rounded-lg focus:outline-none"
+          className="block w-full bg-gray-700 text-white p-2 rounded-lg focus:outline-none"
         />
         <button
           disabled={isLoading}

@@ -56,6 +56,7 @@ import {
 import { useState } from "react";
 import { Toaster, toast } from "react-hot-toast";
 import { useUploadImageMutation } from "../../app/api/uploadApi";
+import { useGetAllExpesesQuery } from "../../app/api/expenseApi";
 
 
 export const Profile = () => {
@@ -71,6 +72,10 @@ export const Profile = () => {
   const [ changeUserName , setChangeUsername] = useState("");
   const [ changeFullName , setChangeFullName] = useState("");
   const [changeImage, setChangeImage] = useState<File | null>(null);
+  const { data:salaries } = useGetAllExpesesQuery({});
+  console.log(salaries);
+  
+
 
   // change name
   const handleNameChange = async () => {
@@ -239,15 +244,12 @@ export const Profile = () => {
             Maoshlarim
           </AccordionTrigger>
           <AccordionContent className="">
-            <div className="flex gap-3 my-2">
+            <div className="flex gap-10 my-2">
               <span className="text-[#FFCC15] text-[14px] font-bold px-4">
-                Xamir soni
+                Olingan puli
               </span>
               <span className="text-[#FFCC15] text-[14px] font-bold px-4">
-                Doimiy narx
-              </span>
-              <span className="text-[#FFCC15] text-[14px] font-bold px-4">
-                Umumiy
+                Sana
               </span>
             </div>
 
@@ -255,35 +257,26 @@ export const Profile = () => {
               <TableBody className="border border-yellow-400 rounded-lg">
                 <TableRow className="hover:bg-transparent border-b border-b-yellow-400 ">
                   <TableCell className="font-bold text-[15px] text-[#1C2C57]">
-                    7 xamir
+                     500 ming
                   </TableCell>
                   <TableCell className="font-bold text-[15px] text-[#1C2C57]">
-                    60 ming
-                  </TableCell>
-                  <TableCell className="font-bold text-[15px] text-[#1C2C57]">
-                    420 ming
+                    12.12.2024        
                   </TableCell>
                 </TableRow>
                 <TableRow className="hover:bg-transparent border-b border-b-yellow-400">
                   <TableCell className="font-bold text-[15px] text-[#1C2C57]">
-                    3 xamir
+                    500 ming
                   </TableCell>
                   <TableCell className="font-bold text-[15px] text-[#1C2C57]">
-                    60 ming
-                  </TableCell>
-                  <TableCell className="font-bold text-[15px] text-[#1C2C57]">
-                    180 ming
+                    12.12.2024        
                   </TableCell>
                 </TableRow>
                 <TableRow className="hover:bg-transparent border-b border-b-yellow-400">
                   <TableCell className="font-bold text-[15px] text-[#1C2C57]">
-                    6 xamir
+                    500 ming
                   </TableCell>
                   <TableCell className="font-bold text-[15px] text-[#1C2C57]">
-                    60 ming
-                  </TableCell>
-                  <TableCell className="font-bold text-[15px] text-[#1C2C57]">
-                    360 ming
+                    12.12.2024        
                   </TableCell>
                 </TableRow>
                 <TableRow className="hover:bg-transparent border-b border-b-yellow-400">
