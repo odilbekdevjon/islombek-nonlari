@@ -29,4 +29,4 @@ export const doughroomApi = baseApi.injectEndpoints({
     }),
 })
 
-export const { useGetAllDoughroomsQuery, useGetByIdDoughroomQuery } = doughroomApi;
+export const { useGetAllDoughroomsQuery, useGetByIdDoughroomQuery, usePostDoughroomMutation } = doughroomApi;

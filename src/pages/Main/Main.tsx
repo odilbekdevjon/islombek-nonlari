@@ -25,6 +25,7 @@ export const Main = () => {
   const navigate = useNavigate();
   const { data: branches } = useGetAllBranchesQuery([]);
   const { data: retsepts } = useGetAllRetsepsQuery([]);
+  
 
   const [selectedBranchId, setSelectedBranchId] = useState<string | null>(
     localStorage.getItem("selectedBranchId") || null
@@ -39,7 +40,7 @@ export const Main = () => {
 
   const handleClick = (id: string) => {
     setSelectedBranchId(id);
-    setOpen(false); // Drawer'ni yopish
+    setOpen(false); 
   };
 
   return (

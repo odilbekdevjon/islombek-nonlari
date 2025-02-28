@@ -36,7 +36,7 @@ export interface DoughItem {
 }
 
 export interface PostDoughroomsRequest {
-  doughroom: string;
+  doughroom: string | null;
   count: number;
 }
 

@@ -12,14 +12,40 @@ import { Input } from "../../components/ui/input";
 import { Label } from "../../components/ui/label";
 import { useState } from "react";
 import { FaPlus } from "react-icons/fa";
-import { useGetByIdDoughroomQuery } from "../../app/api/doughroomApi";
+import { useGetByIdDoughroomQuery, usePostDoughroomMutation } from "../../app/api/doughroomApi";
 import dayjs from "dayjs";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export const Bakery = () => {
   const navigate = useNavigate();
   const [value, setValue] = useState("");
   const branchId = localStorage.getItem("selectedBranchId")
   const { data } = useGetByIdDoughroomQuery({id:branchId as string}, {skip:!branchId});
+  const [ postDoughroom ] = usePostDoughroomMutation();
+  const [isOpen, setIsOpen] = useState(false);
+
+  const handleAddDough = async () => {
+      if (!value || isNaN(Number(value))) {
+      toast.error("Xamir sonini to'g'ri kiriting!");
+      return;
+    }
+
+    try {
+      const response = await postDoughroom({ doughroom: branchId, count: Number(value) });
+
+      if ("error" in response) {
+        throw new Error("Xatolik yuz berdi!");
+      }
+
+      toast.success("Xamir miqdori qo‘shildi!");
+      setIsOpen(false); 
+      setValue(""); 
+    } catch (error) {
+      console.log(error);      
+    }
+
+  }
 
   return (
     <>
@@ -69,7 +95,7 @@ export const Bakery = () => {
         )}
       </div>
 
-      <Dialog>
+      <Dialog open={isOpen} onOpenChange={setIsOpen}>
         <DialogTrigger asChild>
           <div className="flex justify-end items-end relative min-h-[30vh] p-4">
             <Button
@@ -98,8 +124,9 @@ export const Bakery = () => {
             <Button
               className="mt-8 bg-[#FFCC15] text-[#1C2C57] hover:bg-[#FFCC15]"
               type="submit"
+              onClick={handleAddDough}
             >
-              Save changes
+              Save 
             </Button>
           </div>
         </DialogContent>
