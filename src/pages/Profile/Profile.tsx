@@ -57,6 +57,7 @@ import { useState } from "react";
 import { Toaster, toast } from "react-hot-toast";
 import { useUploadImageMutation } from "../../app/api/uploadApi";
 import { useGetAllExpesesQuery } from "../../app/api/expenseApi";
+import dayjs from "dayjs";
 
 
 export const Profile = () => {
@@ -65,7 +66,6 @@ export const Profile = () => {
   const [updateUserPassword] = useUpdateUserPasswordMutation();
   const [ updateUser ] = useUpdateUserMutation({});
   const [uploadImage] = useUploadImageMutation();
-
   const [password, setPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
@@ -73,12 +73,10 @@ export const Profile = () => {
   const [ changeFullName , setChangeFullName] = useState("");
   const [changeImage, setChangeImage] = useState<File | null>(null);
   const { data:salaries } = useGetAllExpesesQuery({});
-  console.log(salaries);
-  
-
 
   // change name
   const handleNameChange = async () => {
+
     const response = await updateUser({
       id:user?._id as string,
       fullName: changeFullName || user?.fullName,
@@ -223,7 +221,7 @@ export const Profile = () => {
                   </Label>
                   <Input
                     id="image"
-                    className="col-span-3 border-yellow-400 border-2 border-solid"
+                    className="col-span-3 !border-[#1C2C57] border-2 border-solid"
                     type="file"
                     onChange={(e) => setChangeImage(e.target.files?.[0] || null)}
                     accept="image/*"
@@ -244,7 +242,7 @@ export const Profile = () => {
             Maoshlarim
           </AccordionTrigger>
           <AccordionContent className="">
-            <div className="flex gap-10 my-2">
+            <div className="flex items-center gap-20 my-2">
               <span className="text-[#FFCC15] text-[14px] font-bold px-4">
                 Olingan puli
               </span>
@@ -255,40 +253,18 @@ export const Profile = () => {
 
             <Table className="bg-white">
               <TableBody className="border border-yellow-400 rounded-lg">
-                <TableRow className="hover:bg-transparent border-b border-b-yellow-400 ">
+                {
+                  salaries?.map((salary:any) => (
+                    <TableRow className="hover:bg-transparent border-b border-b-yellow-400 ">
                   <TableCell className="font-bold text-[15px] text-[#1C2C57]">
-                     500 ming
+                    {salary.amount} sum
                   </TableCell>
                   <TableCell className="font-bold text-[15px] text-[#1C2C57]">
-                    12.12.2024        
-                  </TableCell>
-                </TableRow>
-                <TableRow className="hover:bg-transparent border-b border-b-yellow-400">
-                  <TableCell className="font-bold text-[15px] text-[#1C2C57]">
-                    500 ming
-                  </TableCell>
-                  <TableCell className="font-bold text-[15px] text-[#1C2C57]">
-                    12.12.2024        
+                    {dayjs(salary.createdAt).format("MM.DD.YYYY")}   
                   </TableCell>
                 </TableRow>
-                <TableRow className="hover:bg-transparent border-b border-b-yellow-400">
-                  <TableCell className="font-bold text-[15px] text-[#1C2C57]">
-                    500 ming
-                  </TableCell>
-                  <TableCell className="font-bold text-[15px] text-[#1C2C57]">
-                    12.12.2024        
-                  </TableCell>
-                </TableRow>
-                <TableRow className="hover:bg-transparent border-b border-b-yellow-400">
-                  <TableCell className=""></TableCell>
-                  <TableCell className=""></TableCell>
-                  <TableCell className=""></TableCell>
-                </TableRow>
-                <TableRow className="hover:bg-transparent border-b border-b-yellow-400">
-                  <TableCell className=""></TableCell>
-                  <TableCell className=""></TableCell>
-                  <TableCell className=""></TableCell>
-                </TableRow>
+                  ))
+                }
               </TableBody>
             </Table>
           </AccordionContent>

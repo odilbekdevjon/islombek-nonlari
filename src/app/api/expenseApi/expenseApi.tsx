@@ -4,7 +4,7 @@ import { GetAllExpensesRequest, GetAllExpensesResponse, GetExpenseRequest, GetEx
 
 export const expenseApi = baseApi.injectEndpoints({
     endpoints: (builder) => ({
-        getAllExpeses: builder.query<GetAllExpensesResponse, GetAllExpensesRequest>({
+        getAllExpeses: builder.query<GetAllExpensesResponse[], GetAllExpensesRequest>({
             query: () => ({
                 url: PATHS.ALL,
                 method: 'GET',

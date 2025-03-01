@@ -14,7 +14,7 @@ import { useState } from "react";
 import { FaPlus } from "react-icons/fa";
 import { useGetByIdDoughroomQuery, usePostDoughroomMutation } from "../../app/api/doughroomApi";
 import dayjs from "dayjs";
-import { toast } from "react-toastify";
+import { Toaster, toast } from "react-hot-toast";
 import "react-toastify/dist/ReactToastify.css";
 
 export const Bakery = () => {
@@ -50,6 +50,7 @@ export const Bakery = () => {
   return (
     <>
       <header className="flex justify-between items-center border-b-2 border-b-[#FFCC15] pb-5 px-5 rounded-[30px] mt-3">
+      <Toaster position="top-center" reverseOrder={false} />
         <BsArrowLeftCircleFill
           onClick={() => navigate("/home")}
           size={25}
