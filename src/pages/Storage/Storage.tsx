@@ -15,7 +15,8 @@ export const Storage = () => {
   const navigate = useNavigate();
   const branchId = localStorage.getItem("selectedBranchId")
   const { data } = useGetByIdDoughroomQuery({id:branchId as string}, {skip:!branchId});
-  
+  const { data:doughroom } = useGetByIdDoughroomQuery({id:branchId as string}, {skip:!branchId});
+  console.log(doughroom?.doughs);
 
   return (
     <div>
